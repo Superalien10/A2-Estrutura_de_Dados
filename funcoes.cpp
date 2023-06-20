@@ -1,6 +1,7 @@
 #include "funcoes.hpp"
 #include <iostream>
 #include <fstream>
+
 using namespace std;
 string strReadtxt(string strNomeArquivo)
 {
@@ -16,7 +17,7 @@ string strReadtxt(string strNomeArquivo)
 
         //Se quiser ver o conteudo do arquivo, descomente a linha abaixo
         //cout << "Conteúdo do arquivo:\n" << strConteudoArquivo << endl;
-        
+
         return strConteudoArquivo;
         ifsArquivo.close(); 
     } else {
@@ -38,8 +39,8 @@ string strCreateInicialMenu()
         cout << "3. Sair" << endl;
         cout << "======================" << endl;
         cout << "Digite o número da opção: ";
-        cout << endl;
         cin >> iOpcao;
+        cout << endl;
 
         string strNomeArquivo;
         string strDadosIniciais;
@@ -48,6 +49,7 @@ string strCreateInicialMenu()
                 cout << "Opção 1 selecionada." << endl;
                 cout << "Digite o nome do arquivo com a extensão: ";
                 cin >> strNomeArquivo;
+                return strReadtxt(strNomeArquivo);
                 break;
             case 2:
                 cout << "Opção 2 selecionada." << endl;
