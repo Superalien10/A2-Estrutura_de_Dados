@@ -14,5 +14,5 @@ struct Node
 struct Node* newNode(int iData);
 struct Node* insertNode(struct Node* npNode, int iData);
 struct Node* buildTree(string strDadosIniciais);
-
+int treeLength(struct Node* npNode);
 #endif

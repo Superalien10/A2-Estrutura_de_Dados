@@ -3,6 +3,8 @@
 #include <fstream>
 
 using namespace std;
+
+// Função para ler o arquivo .txt
 string Readtxt(string strNomeArquivo)
 {
     ifstream ifsArquivo(strNomeArquivo); 
@@ -26,6 +28,8 @@ string Readtxt(string strNomeArquivo)
     }
 
 }
+
+// Função para criar o menu inicial
 string CreateInicialMenu()
 {
     int iOpcao;
@@ -70,6 +74,7 @@ string CreateInicialMenu()
     }
 }
 
+// Função pra criar um novo nó
 struct Node* newNode(int iData)
 {
     //np -> node pointer
@@ -80,6 +85,7 @@ struct Node* newNode(int iData)
     return npNewNode;    
 }
 
+// Função pra inserir um nó na árvore
 struct Node* insertNode(struct Node* npNode, int iData)
 {
     if(npNode == nullptr)
@@ -97,6 +103,7 @@ struct Node* insertNode(struct Node* npNode, int iData)
     return npNode;   
 }
 
+// Função pra construir a árvore
 struct Node* buildTree(string strDadosIniciais)
 {
     struct Node* npRoot = nullptr;
@@ -118,3 +125,15 @@ struct Node* buildTree(string strDadosIniciais)
     npRoot = insertNode(npRoot, iData);
     return npRoot;
 }
+
+// Função pra imprimir o tamanho da árvore
+int treeLength(struct Node* npNode)
+{
+    if (npNode == nullptr)
+        return 0;
+    else
+        return treeLength(npNode->npLeft) + 1 + treeLength(npNode->npRight);
+}
+
+
+
