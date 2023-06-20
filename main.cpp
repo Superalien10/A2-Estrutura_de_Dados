@@ -3,6 +3,7 @@
 using namespace std;
 int main()
 {
-    CreateInicialMenu();
+    string strDadosIniciais =  CreateInicialMenu();
+    struct Node* npRoot = buildTree(strDadosIniciais);
     return 0;
 }

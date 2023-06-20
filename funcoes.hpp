@@ -5,6 +5,13 @@
 using namespace std;
 string Readtxt(string strNomeArquivo);
 string CreateInicialMenu();
-//struct Node;
+struct Node
+{
+    int iPayload;
+    struct Node* npLeft;
+    struct Node* npRight;
+};
 struct Node* newNode(int iData);
+struct Node* buildTree(string strDadosIniciais);
+
 #endif

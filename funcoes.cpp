@@ -52,9 +52,10 @@ string CreateInicialMenu()
                 return Readtxt(strNomeArquivo);
                 break;
             case 2:
-                cout << "Opção 2 selecionada." << endl;
-                cout << "Insira abaixo os valores que para construir a árvore separados por espaco:" << endl;
-                cin >> strDadosIniciais;
+                cout << "Opcao 2 selecionada." << endl;
+                cout << "Insira abaixo os valores que para construir a arvore separados por espaco:" << endl;
+                cin.ignore();
+                getline(cin, strDadosIniciais);
                 return strDadosIniciais;
             case 3:
                 cout << "Saindo do programa..." << endl;
@@ -68,12 +69,7 @@ string CreateInicialMenu()
         cin.get();
     }
 }
-struct Node
-{
-    int iPayload;
-    struct Node* npLeft;
-    struct Node* npRight;
-};
+
 struct Node* newNode(int iData)
 {
     //np -> node pointer
@@ -99,4 +95,26 @@ struct Node* insertNode(struct Node* npNode, int iData)
         npNode->npRight = insertNode(npNode->npRight, iData);
     }
     return npNode;   
+}
+
+struct Node* buildTree(string strDadosIniciais)
+{
+    struct Node* npRoot = nullptr;
+    int iData = 0;
+    int i = 0;
+    while (strDadosIniciais[i] != '\0')
+    {
+        if(strDadosIniciais[i] != ' ')
+        {
+            iData = iData * 10 + (strDadosIniciais[i] - '0');
+        }
+        else
+        {
+            npRoot = insertNode(npRoot, iData);
+            iData = 0;
+        }
+        i++;
+    }
+    npRoot = insertNode(npRoot, iData);
+    return npRoot;
 }
