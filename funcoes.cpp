@@ -111,6 +111,7 @@ void CreateSecondaryMenu(struct Node* npRoot)
     }
 }
 
+// Função pra criar o menu completo
 void CreateCompleteMenu()
 {
     string strDadosIniciais = CreateInicialMenu();
