@@ -74,6 +74,51 @@ string CreateInicialMenu()
     }
 }
 
+// Função pra criar menu secundário
+void CreateSecondaryMenu(struct Node* npRoot)
+{
+    int iOpcao;
+
+    while (true) {
+        cout << "======================" << endl;
+        cout << "      MENU SECUNDARIO     " << endl;
+        cout << "======================" << endl;
+        cout << "1. IMPRIMA O TAMANHO DA ARVORE" << endl;
+        cout << "2. IMPRIMA A ALTURA/PROFUNDIDADE DA ARVORE" << endl;
+        cout << "3. Sair" << endl;
+        cout << "======================" << endl;
+        cout << "Digite o numero da opcao: ";
+        cin >> iOpcao;
+        cout << endl;
+
+        switch (iOpcao) {
+            case 1:
+                cout << "Tamanho da arvore: " << treeLength(npRoot) << endl;
+                break;
+            case 2:
+                cout << "Altura/Profundidade da arvore: " << treeDepth(npRoot) << endl;
+                break;
+            case 3:
+                cout << "Saindo do programa..." << endl;
+                return;
+            default:
+                cout << "Opcao invalida. Tente novamente." << endl;
+        }
+
+        cin.ignore();
+        cout << "Pressione Enter para continuar...";
+        cin.get();
+    }
+}
+
+void CreateCompleteMenu()
+{
+    string strDadosIniciais = CreateInicialMenu();
+    struct Node* npRoot = buildTree(strDadosIniciais);
+    CreateSecondaryMenu(npRoot);
+
+}
+
 // Função pra criar um novo nó
 struct Node* newNode(int iData)
 {
@@ -135,5 +180,20 @@ int treeLength(struct Node* npNode)
         return treeLength(npNode->npLeft) + 1 + treeLength(npNode->npRight);
 }
 
+//Funcão pra imprimir a profundidade da árvore
+int treeDepth(struct Node* npNode)
+{
+    if (npNode == nullptr)
+        return 0;
+    else
+    {
+        int iLeftDepth = treeDepth(npNode->npLeft);
+        int iRightDepth = treeDepth(npNode->npRight);
+        if (iLeftDepth > iRightDepth)
+            return (iLeftDepth + 1);
+        else
+            return (iRightDepth + 1);
+    }
+}
 
 
