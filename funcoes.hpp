@@ -12,6 +12,7 @@ struct Node
     struct Node* npRight;
 };
 struct Node* newNode(int iData);
+struct Node* insertNode(struct Node* npNode, int iData);
 struct Node* buildTree(string strDadosIniciais);
 
 #endif
