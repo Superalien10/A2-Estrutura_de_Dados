@@ -3,6 +3,6 @@
 using namespace std;
 int main()
 {
-    strCreateInicialMenu();
+    CreateInicialMenu();
     return 0;
 }

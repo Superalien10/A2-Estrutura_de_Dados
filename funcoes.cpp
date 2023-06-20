@@ -3,7 +3,7 @@
 #include <fstream>
 
 using namespace std;
-string strReadtxt(string strNomeArquivo)
+string Readtxt(string strNomeArquivo)
 {
     ifstream ifsArquivo(strNomeArquivo); 
 
@@ -26,7 +26,7 @@ string strReadtxt(string strNomeArquivo)
     }
 
 }
-string strCreateInicialMenu()
+string CreateInicialMenu()
 {
     int iOpcao;
 
@@ -34,11 +34,11 @@ string strCreateInicialMenu()
         cout << "======================" << endl;
         cout << "      MENU INICIAL     " << endl;
         cout << "======================" << endl;
-        cout << "1. CONSTRUÍR ÁRVORE BINÁRIA DE BUSCA POR .TXT (cada dado deve estar separado por espaço no arquivo)" << endl;
-        cout << "2. CONSTRUÍR ÁRVORE BINÁRIA DE BUSCA INSERINDO DADOS" << endl;
+        cout << "1. CONSTRUIR ARVORE BINARIA DE BUSCA POR .TXT (cada dado deve estar separado por espaco no arquivo)" << endl;
+        cout << "2. CONSTRUIR ARVORE BINARIA DE BUSCA INSERINDO DADOS" << endl;
         cout << "3. Sair" << endl;
         cout << "======================" << endl;
-        cout << "Digite o número da opção: ";
+        cout << "Digite o numero da opcao: ";
         cin >> iOpcao;
         cout << endl;
 
@@ -46,25 +46,57 @@ string strCreateInicialMenu()
         string strDadosIniciais;
         switch (iOpcao) {
             case 1:
-                cout << "Opção 1 selecionada." << endl;
-                cout << "Digite o nome do arquivo com a extensão: ";
+                cout << "Opcao 1 selecionada." << endl;
+                cout << "Digite o nome do arquivo com a extensao: ";
                 cin >> strNomeArquivo;
-                return strReadtxt(strNomeArquivo);
+                return Readtxt(strNomeArquivo);
                 break;
             case 2:
                 cout << "Opção 2 selecionada." << endl;
-                cout << "Insira abaixo os valores que para construír a árvore separados por espaço:" << endl;
+                cout << "Insira abaixo os valores que para construir a árvore separados por espaco:" << endl;
                 cin >> strDadosIniciais;
                 return strDadosIniciais;
             case 3:
                 cout << "Saindo do programa..." << endl;
                 return "";
             default:
-                cout << "Opção inválida. Tente novamente." << endl;
+                cout << "Opcao invalida. Tente novamente." << endl;
         }
 
         cin.ignore();
         cout << "Pressione Enter para continuar...";
         cin.get();
     }
+}
+struct Node
+{
+    int iPayload;
+    struct Node* npLeft;
+    struct Node* npRight;
+};
+struct Node* newNode(int iData)
+{
+    //np -> node pointer
+    struct Node* npNewNode = (struct Node*) malloc(sizeof(struct Node));
+    npNewNode->iPayload = iData;
+    npNewNode->npLeft = nullptr;
+    npNewNode->npRight = nullptr;
+    return npNewNode;    
+}
+
+struct Node* insertNode(struct Node* npNode, int iData)
+{
+    if(npNode == nullptr)
+    {
+        return newNode(iData);
+    }
+    if(iData < npNode->iPayload)
+    {
+        npNode->npLeft = insertNode(npNode->npLeft, iData);
+    }
+    else
+    {
+        npNode->npRight = insertNode(npNode->npRight, iData);
+    }
+    return npNode;   
 }

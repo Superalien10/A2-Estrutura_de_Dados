@@ -3,6 +3,8 @@
 
 #include <string>
 using namespace std;
-string strReadtxt(string strNomeArquivo);
-string strCreateInicialMenu();
+string Readtxt(string strNomeArquivo);
+string CreateInicialMenu();
+//struct Node;
+struct Node* newNode(int iData);
 #endif
