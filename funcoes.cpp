@@ -1,12 +1,19 @@
 #include "funcoes.hpp"
 #include <iostream>
 #include <fstream>
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
+
+// Variáveis globais que registram tempo
+duration<double>timeDuration;
+time_point<system_clock> timeStart, timeStop;
 
 // Função para ler o arquivo .txt
 string Readtxt(string strNomeArquivo)
 {
+    timeStart = high_resolution_clock::now();
     ifstream ifsArquivo(strNomeArquivo); 
 
     if (ifsArquivo.is_open()) {
@@ -60,9 +67,11 @@ string CreateInicialMenu()
                 cout << "Insira abaixo os valores que para construir a arvore separados por espaco:" << endl;
                 cin.ignore();
                 getline(cin, strDadosIniciais);
+                timeStart = high_resolution_clock::now();
                 return strDadosIniciais;
             case 3:
                 cout << "Saindo do programa..." << endl;
+                timeStart = high_resolution_clock::now();
                 return "";
             default:
                 cout << "Opcao invalida. Tente novamente." << endl;
@@ -93,18 +102,24 @@ void CreateSecondaryMenu(struct Node* npRoot)
 
         switch (iOpcao) {
             case 1:
+                timeStart = high_resolution_clock::now();
                 cout << "Tamanho da arvore: " << treeLength(npRoot) << endl;
                 break;
             case 2:
+                timeStart = high_resolution_clock::now();
                 cout << "Altura/Profundidade da arvore: " << treeDepth(npRoot) << endl;
                 break;
             case 3:
+                timeStart = high_resolution_clock::now();
                 cout << "Saindo do programa..." << endl;
                 return;
             default:
                 cout << "Opcao invalida. Tente novamente." << endl;
         }
 
+        timeStop=high_resolution_clock::now();
+        timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
+        cout << "Tempo de operacao: " << timeDuration.count() << endl;
         cin.ignore();
         cout << "Pressione Enter para continuar...";
         cin.get();
@@ -116,7 +131,13 @@ void CreateCompleteMenu()
 {
     string strDadosIniciais = CreateInicialMenu();
     struct Node* npRoot = buildTree(strDadosIniciais);
+    timeStop=high_resolution_clock::now();
+    timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
+    cout << "Tempo de operacao: " << timeDuration.count() << endl;
     CreateSecondaryMenu(npRoot);
+    timeStop=high_resolution_clock::now();
+    timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
+    cout << "Tempo de operacao: " << timeDuration.count() << endl;
 
 }
 
