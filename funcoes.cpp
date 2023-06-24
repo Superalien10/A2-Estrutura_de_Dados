@@ -94,11 +94,14 @@ void CreateSecondaryMenu(struct Node* npRoot)
         cout << "======================" << endl;
         cout << "1. IMPRIMA O TAMANHO DA ARVORE" << endl;
         cout << "2. IMPRIMA A ALTURA/PROFUNDIDADE DA ARVORE" << endl;
-        cout << "3. Sair" << endl;
+        cout << "3. ORDENAR COM BUBBLE SORT" << endl;
+        cout << "4. Sair" << endl;
         cout << "======================" << endl;
         cout << "Digite o numero da opcao: ";
         cin >> iOpcao;
         cout << endl;
+
+        struct ListNode* npListRoot = nullptr;
 
         switch (iOpcao) {
             case 1:
@@ -110,6 +113,12 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 cout << "Altura/Profundidade da arvore: " << treeDepth(npRoot) << endl;
                 break;
             case 3:
+                timeStart = high_resolution_clock::now();
+                npListRoot = bubbleSort(npRoot);
+                cout << "Lista ordenada: ";
+                displayList(npListRoot);
+                break;
+            case 4:
                 timeStart = high_resolution_clock::now();
                 cout << "Saindo do programa..." << endl;
                 return;
@@ -218,4 +227,75 @@ int treeDepth(struct Node* npNode)
     }
 }
 
+// Função pra criar um novo nó de lista
+struct ListNode* newListNode(int iData)
+{
+    //np -> node pointer
+    struct ListNode* npNewNode = (struct ListNode*) malloc(sizeof(struct ListNode));
+    npNewNode->iPayload = iData;
+    npNewNode->npNext = nullptr;
+    npNewNode->npPrev = nullptr;
+    return npNewNode;    
+}
 
+// Função que insere um nó de lista numa lista
+struct ListNode* insertListNode(struct ListNode* npNode, int iData)
+{
+    struct ListNode* npNewNode = newListNode(iData);
+    if (npNode==nullptr) return npNewNode;
+    struct ListNode* tempListNode = npNode;
+    while (tempListNode->npNext!=nullptr) tempListNode=tempListNode->npNext;
+    tempListNode->npNext=npNewNode;
+    npNewNode->npPrev=tempListNode;
+    return npNode;
+}
+
+// Função que atravessa a árvore e adiciona novos itens na lista, copiando a árvore
+struct ListNode* traversePreOrder(struct ListNode* npListNode, struct Node* npNode)
+{
+    if (npNode!=nullptr)
+    {
+        npListNode = insertListNode(npListNode, npNode->iPayload);
+        traversePreOrder(npListNode, npNode->npLeft);
+        traversePreOrder(npListNode, npNode->npRight);
+    }
+}
+
+// Função que cria uma lista com base na árvore
+struct ListNode* treeToList(struct Node* npNode)
+{
+    struct ListNode* npListNode = traversePreOrder(nullptr, npNode);
+    return npListNode;
+}
+
+// Função que pede uma lista pra treeToList e a ordena pelo método de BubbleSort (Por enquanto, ela não faz a ordenação)
+struct ListNode* bubbleSort(struct Node* npNode)
+{
+    return treeToList(npNode);
+}
+
+// Função que exibe os elementos de uma lista
+void displayList(struct ListNode* npListNode)
+{
+    if (npListNode == nullptr)
+    {
+        cout << "Não é possível exibir: lista vazia" << endl;
+        return;
+    }
+
+    if (npListNode->npPrev!=nullptr)
+    {
+        cout << "Não é possível exibir: meio da Lista" << endl;
+        return;
+    }
+
+    cout << "Payload: ";
+
+    while (npListNode!=nullptr)
+    {
+        cout << npListNode->iPayload << " ";
+        npListNode = npListNode->npNext;
+    }
+
+    cout << endl;
+}

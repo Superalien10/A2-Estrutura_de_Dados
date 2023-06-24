@@ -18,4 +18,16 @@ void CreateSecondaryMenu(struct Node* npRoot);
 void CreateCompleteMenu();
 int treeLength(struct Node* npNode);
 int treeDepth(struct Node* npNode);
+struct ListNode
+{
+    int iPayload;
+    struct ListNode* npNext;
+    struct ListNode* npPrev;
+};
+struct ListNode* newListNode(int iData);
+struct ListNode* insertListNode(struct ListNode* npNode, int iData);
+struct ListNode* traversePreOrder(struct ListNode* npListNode, struct Node* npNode);
+struct ListNode* treeToList(struct ListNode* npNode);
+struct ListNode* bubbleSort(struct Node* npNode);
+void displayList(struct ListNode* npListNode);
 #endif
