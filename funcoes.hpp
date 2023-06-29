@@ -30,4 +30,6 @@ struct ListNode* traversePreOrder(struct ListNode* npListNode, struct Node* npNo
 struct ListNode* treeToList(struct ListNode* npNode);
 struct ListNode* bubbleSort(struct Node* npNode);
 void displayList(struct ListNode* npListNode);
+struct ListNode* optimizedBubbleSort(struct ListNode**);
+void swapListNodes(struct ListNode**, struct ListNode**);
 #endif
