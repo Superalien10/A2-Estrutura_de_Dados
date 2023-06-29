@@ -95,7 +95,8 @@ void CreateSecondaryMenu(struct Node* npRoot)
         cout << "1. IMPRIMA O TAMANHO DA ARVORE" << endl;
         cout << "2. IMPRIMA A ALTURA/PROFUNDIDADE DA ARVORE" << endl;
         cout << "3. ORDENAR COM BUBBLE SORT" << endl;
-        cout << "4. Sair" << endl;
+        cout << "4. INSERIR ELEMENTO NA ARVORE" << endl;
+        cout << "5. Sair" << endl;
         cout << "======================" << endl;
         cout << "Digite o numero da opcao: ";
         cin >> iOpcao;
@@ -119,6 +120,13 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 displayList(npListRoot);
                 break;
             case 4:
+                timeStart = high_resolution_clock::now();
+                cout << "Insira o elemento que deseja inserir na arvore: ";
+                int iElemento;  
+                cin >> iElemento;
+                npRoot = insertElement(npRoot, iElemento);
+                break;
+            case 5:
                 timeStart = high_resolution_clock::now();
                 cout << "Saindo do programa..." << endl;
                 return;
@@ -298,4 +306,22 @@ void displayList(struct ListNode* npListNode)
     }
 
     cout << endl;
+}
+
+// Função que insere elemento na árvore
+struct Node* insertElement(struct Node* npNode, int iData)
+{
+    if(npNode == nullptr)
+    {
+        return newNode(iData);
+    }
+    if(iData < npNode->iPayload)
+    {
+        npNode->npLeft = insertNode(npNode->npLeft, iData);
+    }
+    else
+    {
+        npNode->npRight = insertNode(npNode->npRight, iData);
+    }
+    return npNode;   
 }

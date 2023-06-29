@@ -14,6 +14,7 @@ struct Node
 struct Node* newNode(int iData);
 struct Node* insertNode(struct Node* npNode, int iData);
 struct Node* buildTree(string strDadosIniciais);
+struct Node* insertElement(struct Node* npNode, int iData);
 void CreateSecondaryMenu(struct Node* npRoot);
 void CreateCompleteMenu();
 int treeLength(struct Node* npNode);
