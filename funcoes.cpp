@@ -87,7 +87,6 @@ string CreateInicialMenu()
 void CreateSecondaryMenu(struct Node* npRoot)
 {
     int iOpcao;
-
     while (true) {
         cout << "======================" << endl;
         cout << "      MENU SECUNDARIO     " << endl;
@@ -96,14 +95,15 @@ void CreateSecondaryMenu(struct Node* npRoot)
         cout << "2. IMPRIMA A ALTURA/PROFUNDIDADE DA ARVORE" << endl;
         cout << "3. ORDENAR COM BUBBLE SORT" << endl;
         cout << "4. INSERIR ELEMENTO NA ARVORE" << endl;
-        cout << "5. Sair" << endl;
+        cout << "5. REMOVER ELEMENTO DA ARVORE" << endl;
+        cout << "6. BUSCAR ENDERECO DE MEMORIA DE UM ELEMENTO" << endl;
+        cout << "7. Sair" << endl;
         cout << "======================" << endl;
         cout << "Digite o numero da opcao: ";
         cin >> iOpcao;
         cout << endl;
 
         struct ListNode* npListRoot = nullptr;
-
         switch (iOpcao) {
             case 1:
                 timeStart = high_resolution_clock::now();
@@ -128,6 +128,19 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 break;
             case 5:
                 timeStart = high_resolution_clock::now();
+                cout << "Insira o elemento que deseja remover da arvore: ";
+                cin >> iElemento;
+                npRoot = removeElement(npRoot, iElemento);
+                break;
+            case 6:
+                timeStart = high_resolution_clock::now();
+                cout << "Insira o elemento que deseja buscar na arvore: ";
+                cin >> iElemento;
+                searchElement(npRoot, iElemento);
+                cout << endl;
+                break;
+            case 7:
+                timeStart = high_resolution_clock::now();
                 cout << "Saindo do programa..." << endl;
                 return;
             default:
@@ -147,6 +160,7 @@ void CreateSecondaryMenu(struct Node* npRoot)
 void CreateCompleteMenu()
 {
     string strDadosIniciais = CreateInicialMenu();
+    if (strDadosIniciais == "") return; // Se o usuario digitou 3 no menu inicial
     struct Node* npRoot = buildTree(strDadosIniciais);
     timeStop=high_resolution_clock::now();
     timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
@@ -325,3 +339,72 @@ struct Node* insertElement(struct Node* npNode, int iData)
     }
     return npNode;   
 }
+
+// Função que procura o menor valor da árvore
+struct Node* minValueNode(struct Node* npNode)
+{
+    struct Node* current = npNode;
+    while (current && current->npLeft != nullptr)
+        current = current->npLeft;
+    return current;
+}
+
+// Função que remove elemento da árvore
+struct Node* removeElement(struct Node* npNode, int iData)
+{
+    if (npNode == nullptr)
+    {
+        return npNode;
+    }
+    if (iData < npNode->iPayload)
+    {
+        npNode->npLeft = removeElement(npNode->npLeft, iData);
+    }
+    else if (iData > npNode->iPayload)
+    {
+        npNode->npRight = removeElement(npNode->npRight, iData);
+    }
+    else
+    {
+        if (npNode->npLeft == nullptr)
+        {
+            struct Node* temp = npNode->npRight;
+            free(npNode);
+            return temp;
+        }
+        else if (npNode->npRight == nullptr)
+        {
+            struct Node* temp = npNode->npLeft;
+            free(npNode);
+            return temp;
+        }
+        struct Node* temp = minValueNode(npNode->npRight);
+        npNode->iPayload = temp->iPayload;
+        npNode->npRight = removeElement(npNode->npRight, temp->iPayload);
+    }
+    return npNode;
+}
+
+// Função que imprime o endereço de memória de um nó com elemento pedido pelo usuário da árvore
+void searchElement(struct Node* npNode, int iData)
+{
+    if (npNode == nullptr)
+    {
+        cout << "Elemento nao encontrado" << endl;
+        return;
+    }
+    if (iData < npNode->iPayload)
+    {
+        searchElement(npNode->npLeft, iData);
+    }
+    else if (iData > npNode->iPayload)
+    {
+        searchElement(npNode->npRight, iData);
+    }
+    else
+    {
+        cout << "Endereco de memoria do elemento: " << npNode << endl;
+    }
+}
+
+
