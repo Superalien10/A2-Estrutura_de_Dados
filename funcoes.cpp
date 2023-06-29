@@ -94,8 +94,9 @@ void CreateSecondaryMenu(struct Node* npRoot)
         cout << "======================" << endl;
         cout << "1. IMPRIMA O TAMANHO DA ARVORE" << endl;
         cout << "2. IMPRIMA A ALTURA/PROFUNDIDADE DA ARVORE" << endl;
-        cout << "3. ORDENAR COM BUBBLE SORT" << endl;
-        cout << "4. Sair" << endl;
+        cout << "9. ORDENAR COM BUBBLE SORT" << endl;
+        cout << "10. ORDENAR COM SELECTION SORT" << endl;
+        cout << "11. Sair" << endl;
         cout << "======================" << endl;
         cout << "Digite o numero da opcao: ";
         cin >> iOpcao;
@@ -112,13 +113,18 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 timeStart = high_resolution_clock::now();
                 cout << "Altura/Profundidade da arvore: " << treeDepth(npRoot) << endl;
                 break;
-            case 3:
+            case 9:
                 timeStart = high_resolution_clock::now();
                 npListRoot = bubbleSort(npRoot);
                 cout << "Lista ordenada: ";
                 displayList(npListRoot);
                 break;
-            case 4:
+            case 10:timeStart = high_resolution_clock::now();
+                npListRoot = selectionSort(npRoot);
+                cout << "Lista ordenada: ";
+                displayList(npListRoot);
+                break;
+            case 11:
                 timeStart = high_resolution_clock::now();
                 cout << "Saindo do programa..." << endl;
                 return;
@@ -347,4 +353,39 @@ void swapListNodes(struct ListNode** npFirst, struct ListNode** npSecond)
     {
         npTwo->npPrev->npNext = npTwo;
     }
+}
+
+// Função que pede uma lista pra treeToList e a ordena pelo método de SelectionSort.
+struct ListNode* selectionSort(struct Node* npNode)
+{
+    struct ListNode* npHead = treeToList(npNode);
+    struct ListNode* npCurrent = npHead;
+    while(npCurrent->npNext!=nullptr)
+    {
+        struct ListNode* npMin = npCurrent;
+        struct ListNode* npTemp = npCurrent->npNext;
+        while(npTemp!=nullptr)
+        {
+            if(npTemp->iPayload < npMin->iPayload)
+            {
+                npMin = npTemp;
+            }
+            npTemp = npTemp->npNext;
+        }
+        if(npMin!=npCurrent)
+        {
+            swapListNodes(&npCurrent, &npMin);
+            npCurrent = npMin->npNext;
+        }
+        else
+        {
+            npCurrent = npCurrent->npNext;
+        }
+    }
+    while(npCurrent->npPrev!=nullptr)
+    {
+        npCurrent = npCurrent->npPrev;
+    }
+    npHead=npCurrent;
+    return npHead;
 }
