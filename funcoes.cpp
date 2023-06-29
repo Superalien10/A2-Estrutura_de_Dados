@@ -2,7 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <chrono>
-#include <bits/stdc++.h>
 
 using namespace std;
 using namespace std::chrono;
@@ -230,40 +229,53 @@ class Fila {
             rear = NULL;
         }
 
-        //Função para adicionar elementos na fila
-        void AddFila(int data) {
-            Node* temp = new Node();
-            temp->data = data;
-            temp->next = NULL;
+        // Função para adicionar árvores na fila
+        void AddFila(Node* node) {
             if(front == NULL) {
-                front = temp;
-                rear = temp;
+                front = node;
+                rear = node;
             } else {
-                rear->next = temp;
-                rear = temp;
+                rear->npRight = node;
+                rear = node;
             }
         }
 
-        //Função para remover elementos da fila
+        //Função para remover o primeiro elemento da fila (First In First Out)
         void RemoveFila() {
             if(front == NULL) {
-                cout << "A fila está vazia" << endl;
+                cout << "Fila vazia" << endl;
             } else {
                 Node* temp = front;
-                front = front->next;
+                front = front->npRight;
                 delete temp;
             }
         }
 
+        void inorderTraversal(Node* root) 
+        {
+            if(root != NULL) 
+            {
+            inorderTraversal(root->npLeft);  // Visita o nó esquerdo
+            cout << root->iPayload << " ";   // Visita o nó raiz
+            inorderTraversal(root->npRight); // Visita o nó direito
+            }
+        }
+
+
         //Função para exibir a fila
-        void DisplayFila() {
-            if(front == NULL) {
-                cout << "A fila está vazia" << endl;
-            } else {
+        void displayFila() 
+        {
+            if(front == NULL) 
+            {
+                cout << "Fila vazia" << endl;
+            } 
+            else 
+            {
                 Node* temp = front;
-                while(temp != NULL) {
-                    cout << temp->data << " ";
-                    temp = temp->next;
+                while(temp != NULL) 
+                {
+                    cout << temp->iPayload << " ";
+                    temp = temp->npRight;
                 }
                 cout << endl;
             }
@@ -271,16 +283,31 @@ class Fila {
 };
 
 
+bool IsComplete(struct Node* npNode)
+{
+
+}
 
 
 //Função para analisar se a árvore é perfeita ou não
-void IsPerfect(struct Node* npNode)
+bool IsPerfect(struct Node* npNode)
 {
 
 }
 
 int main()
 {
-    
+    Fila f;
+    f.AddFila(10);
+    f.AddFila(20);
+    f.AddFila(25);
+    f.AddFila(35);
+    f.AddFila(40);
+    f.AddFila(45);
+    f.AddFila(50);
+    f.AddFila(60);
+    f.displayFila();
+    f.RemoveFila();
+    f.displayFila();
     return 0;
 }
