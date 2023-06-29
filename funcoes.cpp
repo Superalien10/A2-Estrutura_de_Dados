@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <chrono>
+#include <bits/stdc++.h>
 
 using namespace std;
 using namespace std::chrono;
@@ -218,4 +219,68 @@ int treeDepth(struct Node* npNode)
     }
 }
 
+//Função para criar um node de uma fila
+class Fila {
+    private:
+        Node *front;
+        Node *rear;
+    public:
+        Fila() {
+            front = NULL;
+            rear = NULL;
+        }
 
+        //Função para adicionar elementos na fila
+        void AddFila(int data) {
+            Node* temp = new Node();
+            temp->data = data;
+            temp->next = NULL;
+            if(front == NULL) {
+                front = temp;
+                rear = temp;
+            } else {
+                rear->next = temp;
+                rear = temp;
+            }
+        }
+
+        //Função para remover elementos da fila
+        void RemoveFila() {
+            if(front == NULL) {
+                cout << "A fila está vazia" << endl;
+            } else {
+                Node* temp = front;
+                front = front->next;
+                delete temp;
+            }
+        }
+
+        //Função para exibir a fila
+        void DisplayFila() {
+            if(front == NULL) {
+                cout << "A fila está vazia" << endl;
+            } else {
+                Node* temp = front;
+                while(temp != NULL) {
+                    cout << temp->data << " ";
+                    temp = temp->next;
+                }
+                cout << endl;
+            }
+        }
+};
+
+
+
+
+//Função para analisar se a árvore é perfeita ou não
+void IsPerfect(struct Node* npNode)
+{
+
+}
+
+int main()
+{
+    
+    return 0;
+}
