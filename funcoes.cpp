@@ -286,14 +286,6 @@ struct ListNode* treeToList(struct Node* npNode)
     return npListNode;
 }
 
-// Função que pede uma lista pra treeToList e a ordena pelo método de BubbleSort.
-struct ListNode* bubbleSort(struct Node* npNode)
-{
-    struct ListNode* npHead = treeToList(npNode);
-    npHead = optimizedBubbleSort(&npHead);
-    return npHead;
-}
-
 // Função que exibe os elementos de uma lista
 void displayList(struct ListNode* npListNode)
 {
@@ -320,10 +312,31 @@ void displayList(struct ListNode* npListNode)
     cout << endl;
 }
 
-// Função que ordena uma lista pelo método de BubbleSort
-struct ListNode* optimizedBubbleSort(struct ListNode** npHead)
+// Função que troca dois nós de lista
+void swapListNodes(struct ListNode** npFirst, struct ListNode** npSecond)
 {
-    struct ListNode* npCurrent = *npHead;
+    struct ListNode* npOne = *npFirst;
+    struct ListNode* npTwo = *npSecond;
+    struct ListNode* npTemp = npOne->npPrev;
+    npOne->npPrev = npTwo;
+    npOne->npNext = npTwo->npNext;
+    npTwo->npPrev = npTemp;
+    npTwo->npNext = npOne;
+    if(npOne->npNext!=nullptr)
+    {
+        npOne->npNext->npPrev = npOne;
+    }
+    if(npTwo->npPrev!=nullptr)
+    {
+        npTwo->npPrev->npNext = npTwo;
+    }
+}
+
+// Função que pede uma lista pra treeToList e a ordena pelo método de BubbleSort.
+struct ListNode* bubbleSort(struct Node* npNode)
+{
+    struct ListNode* npHead = treeToList(npNode);
+    struct ListNode* npCurrent = npHead;
     bool bUnordered = false;
     while(bUnordered==false)
     {
@@ -344,27 +357,8 @@ struct ListNode* optimizedBubbleSort(struct ListNode** npHead)
     {
         npCurrent = npCurrent->npPrev;
     }
-    return npCurrent;
-}
-
-// Função que troca dois nós de lista
-void swapListNodes(struct ListNode** npFirst, struct ListNode** npSecond)
-{
-    struct ListNode* npOne = *npFirst;
-    struct ListNode* npTwo = *npSecond;
-    struct ListNode* npTemp = npOne->npPrev;
-    npOne->npPrev = npTwo;
-    npOne->npNext = npTwo->npNext;
-    npTwo->npPrev = npTemp;
-    npTwo->npNext = npOne;
-    if(npOne->npNext!=nullptr)
-    {
-        npOne->npNext->npPrev = npOne;
-    }
-    if(npTwo->npPrev!=nullptr)
-    {
-        npTwo->npPrev->npNext = npTwo;
-    }
+    npHead = npCurrent;
+    return npHead;
 }
 
 // Função que pede uma lista pra treeToList e a ordena pelo método de SelectionSort.
@@ -405,27 +399,21 @@ struct ListNode* selectionSort(struct Node* npNode)
 // Função que pede uma lista pra treeToList e a ordena pelo método de InsertionSort.
 struct ListNode* insertionSort(struct Node* npNode)
 {
-    cout<<"Check1"<<endl;
     struct ListNode* npHead = treeToList(npNode);
     struct ListNode* npCurrent = npHead;
     while(npCurrent->npNext!=nullptr)
     {
-        cout<<"Check2"<<endl;
         struct ListNode* npTemp = npCurrent->npNext;
         if (npCurrent->iPayload>npTemp->iPayload)
         {
             swapListNodes(&npCurrent, &npTemp);
-            cout<<"Check3"<<endl;
             if (npTemp->npPrev!=nullptr)
             {
                 while (npTemp->iPayload<npTemp->npPrev->iPayload && npTemp->npPrev->npPrev!=nullptr)
                 {
-                    cout<<"Check4.5"<<endl;
                     swapListNodes(&npTemp, &npTemp->npPrev);
-                    cout<<"Check4"<<endl;
                     cout<<npTemp->npPrev<<endl;
                 }
-                cout<<"Check5"<<endl;
                 if (npTemp->iPayload<npTemp->npPrev->iPayload)
                 {
                     swapListNodes(&npTemp, &npTemp->npPrev);
@@ -438,7 +426,6 @@ struct ListNode* insertionSort(struct Node* npNode)
         }
         
     }
-    cout<<"Check6"<<endl;
     while(npCurrent->npPrev!=nullptr)
     {
         npCurrent = npCurrent->npPrev;
