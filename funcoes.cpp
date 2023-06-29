@@ -96,7 +96,8 @@ void CreateSecondaryMenu(struct Node* npRoot)
         cout << "2. IMPRIMA A ALTURA/PROFUNDIDADE DA ARVORE" << endl;
         cout << "9. ORDENAR COM BUBBLE SORT" << endl;
         cout << "10. ORDENAR COM SELECTION SORT" << endl;
-        cout << "11. Sair" << endl;
+        cout << "11. ORDENAR COM INSERTION SORT" << endl;
+        cout << "13. Sair" << endl;
         cout << "======================" << endl;
         cout << "Digite o numero da opcao: ";
         cin >> iOpcao;
@@ -124,7 +125,12 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 cout << "Lista ordenada: ";
                 displayList(npListRoot);
                 break;
-            case 11:
+            case 11:timeStart = high_resolution_clock::now();
+                npListRoot = insertionSort(npRoot);
+                cout << "Lista ordenada: ";
+                displayList(npListRoot);
+                break;
+            case 13:
                 timeStart = high_resolution_clock::now();
                 cout << "Saindo do programa..." << endl;
                 return;
@@ -382,6 +388,53 @@ struct ListNode* selectionSort(struct Node* npNode)
             npCurrent = npCurrent->npNext;
         }
     }
+    while(npCurrent->npPrev!=nullptr)
+    {
+        npCurrent = npCurrent->npPrev;
+    }
+    npHead=npCurrent;
+    return npHead;
+}
+
+// Função que pede uma lista pra treeToList e a ordena pelo método de InsertionSort.
+struct ListNode* insertionSort(struct Node* npNode)
+{
+    cout<<"Check1"<<endl;
+    struct ListNode* npHead = treeToList(npNode);
+    struct ListNode* npCurrent = npHead;
+    while(npCurrent->npNext!=nullptr)
+    {
+        cout<<"Check2"<<endl;
+        struct ListNode* npTemp = npCurrent->npNext;
+        if (npCurrent->iPayload>npTemp->iPayload)
+        {
+            swapListNodes(&npCurrent, &npTemp);
+            cout<<"Check3"<<endl;
+            if (npTemp->npPrev!=nullptr)
+            {
+                while (npTemp->iPayload<npTemp->npPrev->iPayload && npTemp->npPrev->npPrev!=nullptr)
+                {
+                    cout<<"Check4.5"<<endl;
+                    swapListNodes(&npTemp, &npTemp->npPrev);
+                    cout<<"Check4"<<endl;
+                    cout<<npTemp->npPrev<<endl;
+                }
+                cout<<"Check5"<<endl;
+                if (npTemp->iPayload<npTemp->npPrev->iPayload)
+                {
+                    swapListNodes(&npTemp, &npTemp->npPrev);
+                }
+            }
+            
+                
+        }
+        else
+        {
+            npCurrent = npCurrent->npNext;
+        }
+        
+    }
+    cout<<"Check6"<<endl;
     while(npCurrent->npPrev!=nullptr)
     {
         npCurrent = npCurrent->npPrev;

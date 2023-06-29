@@ -33,4 +33,5 @@ void displayList(struct ListNode* npListNode);
 void swapListNodes(struct ListNode**, struct ListNode**);
 struct ListNode* optimizedBubbleSort(struct ListNode**);
 struct ListNode* selectionSort(struct Node*);
+struct ListNode* insertionSort(struct Node*);
 #endif
