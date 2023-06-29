@@ -97,6 +97,7 @@ void CreateSecondaryMenu(struct Node* npRoot)
         cout << "9. ORDENAR COM BUBBLE SORT" << endl;
         cout << "10. ORDENAR COM SELECTION SORT" << endl;
         cout << "11. ORDENAR COM INSERTION SORT" << endl;
+        cout << "12. ORDENAR COM SHELL SORT" << endl;
         cout << "13. Sair" << endl;
         cout << "======================" << endl;
         cout << "Digite o numero da opcao: ";
@@ -127,6 +128,11 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 break;
             case 11:timeStart = high_resolution_clock::now();
                 npListRoot = insertionSort(npRoot);
+                cout << "Lista ordenada: ";
+                displayList(npListRoot);
+                break;
+            case 12:timeStart = high_resolution_clock::now();
+                npListRoot = shellSort(npRoot);
                 cout << "Lista ordenada: ";
                 displayList(npListRoot);
                 break;
@@ -280,7 +286,7 @@ struct ListNode* treeToList(struct Node* npNode)
     return npListNode;
 }
 
-// Função que pede uma lista pra treeToList e a ordena pelo método de BubbleSort (Por enquanto, ela não faz a ordenação)
+// Função que pede uma lista pra treeToList e a ordena pelo método de BubbleSort.
 struct ListNode* bubbleSort(struct Node* npNode)
 {
     struct ListNode* npHead = treeToList(npNode);
@@ -425,8 +431,6 @@ struct ListNode* insertionSort(struct Node* npNode)
                     swapListNodes(&npTemp, &npTemp->npPrev);
                 }
             }
-            
-                
         }
         else
         {
@@ -440,5 +444,12 @@ struct ListNode* insertionSort(struct Node* npNode)
         npCurrent = npCurrent->npPrev;
     }
     npHead=npCurrent;
+    return npHead;
+}
+
+// Função que pede uma lista pra treeToList e a ordena pelo método de ShellSort.(Por enquanto, ela não faz a ordenação)
+struct ListNode* shellSort(struct Node* npNode)
+{
+    struct ListNode* npHead = treeToList(npNode);
     return npHead;
 }

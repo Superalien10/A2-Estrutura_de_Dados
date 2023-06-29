@@ -34,4 +34,5 @@ void swapListNodes(struct ListNode**, struct ListNode**);
 struct ListNode* optimizedBubbleSort(struct ListNode**);
 struct ListNode* selectionSort(struct Node*);
 struct ListNode* insertionSort(struct Node*);
+struct ListNode* shellSort(struct Node*);
 #endif
