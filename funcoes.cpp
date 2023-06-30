@@ -141,7 +141,7 @@ void CreateCompleteMenu()
 
 }
 
-// Função pra criar um novo nó
+//Função pra criar um novo nó
 struct Node* newNode(int iData)
 {
     //np -> node pointer
@@ -224,12 +224,13 @@ class Fila {
         Node *front;
         Node *rear;
     public:
-        Fila() {
+        Fila() 
+        {
             front = NULL;
             rear = NULL;
         }
 
-        // Função para adicionar árvores na fila
+        //Função para adicionar árvores na fila
         void AddFila(Node* node) 
         {
             if(front == NULL) 
@@ -289,16 +290,23 @@ class Fila {
         }
 };
 
+int ConteNode(Node* node) {
+    if (node == nullptr)
+        return 0;
+    return 1 + ConteNode(node->left) + ConteNode(node->right);
+}
 
-
-bool IsComplete(struct Node* npNode)
+bool isComplete(Node* npNode, int iIndex, int iNumberNodes)
 {
-    while(npNode != NULL)
-    {
-        npNode
-    }
-    return true;
-};
+    if (npNode == nullptr)
+        return (true);
+
+    if (iIndex >= iNumberNodes)
+        return (false);
+
+    return (isComplete(npNode->npLeft, 2 * iIndex + 1, iNumberNodes) && 
+    isComplete(npNode->npRight, 2 * iIndex + 2, iNumberNodes));
+}
 
 //Criando uma função para avaliar se a árvore é perfeita
 bool IsPerfect(Node* node)
@@ -347,7 +355,7 @@ void BFS(Node* node) {
 int main()
 {
     Fila f;
-    Node = newNode();
+    Node = new Node();
     insertNode(Node, 10);
     insertNode(Node, 20);
     insertNode(Node, 30);
