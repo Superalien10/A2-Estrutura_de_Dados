@@ -216,7 +216,7 @@ struct Node* buildTree(string strDadosIniciais)
         }
         i++;
     }
-    npRoot = insertNode(npRoot, iData);
+    // npRoot = insertNode(npRoot, iData); Um valor zero estava sendo inserido desnecessariamente.
     return npRoot;
 }
 
@@ -438,5 +438,73 @@ struct ListNode* insertionSort(struct Node* npNode)
 struct ListNode* shellSort(struct Node* npNode)
 {
     struct ListNode* npHead = treeToList(npNode);
+    int n=0;
+    int h;
+    struct ListNode* npTemp = npHead;
+    while (npTemp!=nullptr)
+    {
+        n++;
+        npTemp = npTemp->npNext;
+    }
+    for (h = 1; h <= n; h = 3*h+1);
+    h = (h-1)/3;
+    npTemp = npHead;
+    struct ListNode* npTemp2 = npHead;
+    struct ListNode* npTemp3 = npHead;
+    while (h > 0)
+    {
+        while (npTemp2!=nullptr)
+        {
+            npTemp2=npTemp;
+            for (int i=0; i<h; i++)
+            {
+                npTemp2=npTemp2->npNext;
+                if (npTemp2==nullptr) i=h;
+            }
+            if (npTemp2!=nullptr)
+            {
+                if (npTemp->iPayload>npTemp2->iPayload)
+                {
+                    swapListNodes(&npTemp, &npTemp2);
+                    npTemp = npTemp2->npNext;
+                    while (npTemp3!=nullptr)
+                    {
+                        npTemp3=npTemp2;
+                        for (int j=0; j<h; j++)
+                        {
+                            npTemp3=npTemp3->npPrev;
+                            if (npTemp3==nullptr) j=h;
+                        }
+                        if (npTemp3!=nullptr)
+                        {
+                            if (npTemp3!=nullptr&&npTemp2->iPayload<npTemp3->iPayload)
+                            {
+                                swapListNodes(&npTemp2, &npTemp3);
+                            }
+                            else
+                            {
+                                npTemp3=nullptr;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    npTemp=npTemp->npNext;
+                }
+            }
+        }
+        while (npTemp->npPrev!=nullptr)
+        {
+            npTemp = npTemp->npPrev;
+        }
+        npTemp2=npHead;
+        h = (h-1)/3;
+    }
+    while (npTemp->npPrev!=nullptr)
+    {
+        npTemp = npTemp->npPrev;
+    }
+    npHead=npTemp;
     return npHead;
 }
