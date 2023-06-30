@@ -290,12 +290,6 @@ class Fila {
         }
 };
 
-int ConteNode(Node* node) {
-    if (node == nullptr)
-        return 0;
-    return 1 + ConteNode(node->left) + ConteNode(node->right);
-}
-
 bool isComplete(Node* npNode, int iIndex, int iNumberNodes)
 {
     if (npNode == nullptr)
