@@ -546,7 +546,8 @@ void BFS(Node* node) {
     Fila f;
     f.AddFila(node);
 
-    while (f.front != NULL) {
+    while (f.front != NULL) 
+    {
         Node* temp = f.front->treeNode;
         cout << temp->iPayload << endl;
 
@@ -555,7 +556,6 @@ void BFS(Node* node) {
 
         f.RemoveFila();
     }
-    f.displayFila();
 }
 
 // Função que troca dois nós de lista
