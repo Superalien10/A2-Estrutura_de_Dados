@@ -552,7 +552,7 @@ struct ListNode* shellSort(struct Node* npNode)
                             if (npTemp3!=nullptr&&npTemp2->iPayload<npTemp3->iPayload)
                             {
                                 cout<<"swap"<<npTemp2->iPayload<<"e"<<npTemp3->iPayload<<endl;
-                                swapListNodes(&npTemp2, &npTemp3);
+                                swapListNodes(&npTemp3, &npTemp2);
                                 displayList(npHead);
                             }
                             else
@@ -561,6 +561,7 @@ struct ListNode* shellSort(struct Node* npNode)
                             }
                         }
                     }
+                    npTemp3=npHead;
                 }
                 else
                 {
