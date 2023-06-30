@@ -455,75 +455,58 @@ void searchElement(struct Node* npNode, int iData)
     }
 }
 
-//Função para criar um node de uma fila
+//Estrutura de um node de uma fila
+struct FilaNode {
+    Node* treeNode;
+    FilaNode* next;
+};
+
+//Classe de faila
 class Fila {
-    public:
-        Node *front;
-        Node *rear;
-        Fila() 
-        {
-            front = NULL;
-            rear = NULL;
+public:
+    FilaNode *front, *rear;
+
+    Fila() {
+        front = NULL;
+        rear = NULL;
+    }
+
+    void AddFila(Node* node) {
+        FilaNode* temp = new FilaNode;
+        temp->treeNode = node;
+        temp->next = NULL;
+
+        if (rear == NULL) {
+            front = rear = temp;
+            return;
         }
 
-        //Função para adicionar árvores na fila
-        void AddFila(Node* node) 
-        {
-            if(front == NULL) 
-            {
-                front = node;
-                rear = node;
-            } else 
-            {
-                rear->npRight = node;
-                rear = node;
-            }
+        rear->next = temp;
+        rear = temp;
+    }
+
+    void RemoveFila() {
+        if (front == NULL) {
+            cout << "A fila está vazia" << endl;
+            return;
         }
 
-        //Função para remover o primeiro elemento da fila (First In First Out)
-        void RemoveFila() 
-        {
-            if(front == NULL) 
-            {
-                cout << "A fila está vazia" << endl;
-            } 
-            else 
-            {
-                Node* temp = front;
-                front = front->npRight;
-                delete temp;
-            }
-        }
+        FilaNode* temp = front;
+        front = front->next;
 
-        void inorderTraversal(Node* node) 
-        {
-            if(node != NULL) 
-            {
-            inorderTraversal(node->npLeft);
-            cout << node->iPayload << " ";   
-            inorderTraversal(node->npRight); 
-            }
-        }
+        if (front == NULL) rear = NULL;
 
+        delete temp;
+    }
 
-        //Função para exibir a fila
-        void displayFila() {
-            if(front == NULL) 
-            {
-            cout << "Fila vazia" << endl;
-            } 
-            else 
-            {
-                Node* temp = front;
-                while(temp != NULL) 
-                {
-                    inorderTraversal(temp); 
-                    cout << endl;
-                    temp = temp->npRight;
-                }
-            }
-        
+    void displayFila() {
+        FilaNode* temp = front;
+        while (temp != NULL) {
+            cout << temp->treeNode->iPayload << " ";
+            temp = temp->next;
         }
+        cout << endl;
+    }
 };
 
 bool isComplete(struct Node* npNode, int iIndex, int iNumberNodes)
@@ -552,27 +535,27 @@ bool isPerfect(struct Node* npNode)
 
     if (npNode->npLeft == NULL || npNode->npRight == NULL)
         return false;
-
+        
     return isPerfect(npNode->npLeft) && isPerfect(npNode->npRight);
 }
 
 //Criando a função para que seja realizada a travessia BFS
-void BFS(Node* root) {
-    if (root == NULL) return;
+void BFS(Node* node) {
+    if (node == NULL) return;
 
-    Fila q;
-    q.AddFila(root);
+    Fila f;
+    f.AddFila(node);
 
-    while (q.front != NULL) {
-        Node* temp = q.front;
+    while (f.front != NULL) {
+        Node* temp = f.front->treeNode;
         cout << temp->iPayload << endl;
 
-        if (temp->npLeft != NULL) q.AddFila(temp->npLeft);
-        if (temp->npRight != NULL) q.AddFila(temp->npRight);
+        if (temp->npLeft != NULL) f.AddFila(temp->npLeft);
+        if (temp->npRight != NULL) f.AddFila(temp->npRight);
 
-        q.RemoveFila();
+        f.RemoveFila();
     }
-    q.displayFila();
+    f.displayFila();
 }
 
 // Função que troca dois nós de lista
