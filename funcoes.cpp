@@ -94,6 +94,8 @@ void CreateSecondaryMenu(struct Node* npRoot)
         cout << "======================" << endl;
         cout << "1. IMPRIMA O TAMANHO DA ARVORE" << endl;
         cout << "2. IMPRIMA A ALTURA/PROFUNDIDADE DA ARVORE" << endl;
+        cout << "7. VERIFICAR SE A ARVORE E COMPLETA" << endl;
+        cout << "8. VERIFICAR SE A ARVORE E PERFEITA" << endl;
         cout << "3. Sair" << endl;
         cout << "======================" << endl;
         cout << "Digite o numero da opcao: ";
@@ -108,6 +110,26 @@ void CreateSecondaryMenu(struct Node* npRoot)
             case 2:
                 timeStart = high_resolution_clock::now();
                 cout << "Altura/Profundidade da arvore: " << treeDepth(npRoot) << endl;
+                break;
+            case 7:
+                timeStart = high_resolution_clock::now();
+                if (isComplete(npRoot, 0, treeLength(npRoot))) 
+                {
+                    cout << "A arvore e completa." << endl;
+                } else 
+                {
+                    cout << "A arvore nao e completa." << endl;
+                }
+                break;
+            case 8:
+                timeStart = high_resolution_clock::now();
+                if (isPerfect(npRoot)) 
+                {
+                    cout << "A arvore e perfeita." << endl;
+                } else 
+                {
+                    cout << "A arvore nao e perfeita." << endl;
+                }
                 break;
             case 3:
                 timeStart = high_resolution_clock::now();
