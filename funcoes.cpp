@@ -97,7 +97,9 @@ void CreateSecondaryMenu(struct Node* npRoot)
         cout << "4. INSERIR ELEMENTO NA ARVORE" << endl;
         cout << "5. REMOVER ELEMENTO DA ARVORE" << endl;
         cout << "6. BUSCAR ENDERECO DE MEMORIA DE UM ELEMENTO" << endl;
-        cout << "7. Sair" << endl;
+        cout << "7. VERIFICAR SE A ARVORE E COMPLETA" << endl;
+        cout << "8. VERIFICAR SE A ARVORE E PERFEITA" << endl;
+        cout << "14. Sair" << endl;
         cout << "======================" << endl;
         cout << "Digite o numero da opcao: ";
         cin >> iOpcao;
@@ -141,6 +143,26 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 break;
             case 7:
                 timeStart = high_resolution_clock::now();
+                if (isComplete(npRoot, 0, treeLength(npRoot))) 
+                {
+                    cout << "A arvore e completa." << endl;
+                } else 
+                {
+                    cout << "A arvore nao e completa." << endl;
+                }
+                break;
+            case 8:
+                timeStart = high_resolution_clock::now();
+                if (isPerfect(npRoot)) 
+                {
+                    cout << "A arvore e perfeita." << endl;
+                } else 
+                {
+                    cout << "A arvore nao e perfeita." << endl;
+                }
+                break;
+            case 14:
+                timeStart = high_resolution_clock::now();
                 cout << "Saindo do programa..." << endl;
                 return;
             default:
@@ -172,7 +194,7 @@ void CreateCompleteMenu()
 
 }
 
-// Função pra criar um novo nó
+//Função pra criar um novo nó
 struct Node* newNode(int iData)
 {
     //np -> node pointer
@@ -407,4 +429,128 @@ void searchElement(struct Node* npNode, int iData)
     }
 }
 
+//Função para criar um node de uma fila
+class Fila {
+    public:
+        Node *front;
+        Node *rear;
+        Fila() 
+        {
+            front = NULL;
+            rear = NULL;
+        }
 
+        //Função para adicionar árvores na fila
+        void AddFila(Node* node) 
+        {
+            if(front == NULL) 
+            {
+                front = node;
+                rear = node;
+            } else 
+            {
+                rear->npRight = node;
+                rear = node;
+            }
+        }
+
+        //Função para remover o primeiro elemento da fila (First In First Out)
+        void RemoveFila() 
+        {
+            if(front == NULL) 
+            {
+                cout << "A fila está vazia" << endl;
+            } 
+            else 
+            {
+                Node* temp = front;
+                front = front->npRight;
+                delete temp;
+            }
+        }
+
+        void inorderTraversal(Node* node) 
+        {
+            if(node != NULL) 
+            {
+            inorderTraversal(node->npLeft);
+            cout << node->iPayload << " ";   
+            inorderTraversal(node->npRight); 
+            }
+        }
+
+
+        //Função para exibir a fila
+        void displayFila() {
+            if(front == NULL) 
+            {
+            cout << "Fila vazia" << endl;
+            } 
+            else 
+            {
+                Node* temp = front;
+                while(temp != NULL) 
+                {
+                    inorderTraversal(temp); 
+                    cout << endl;
+                    temp = temp->npRight;
+                }
+            }
+        
+        }
+};
+
+bool isComplete(struct Node* npNode, int iIndex, int iNumberNodes)
+{
+    if (npNode == nullptr)
+        return (true);
+
+    if (iIndex >= iNumberNodes)
+        return (false);
+
+    return (isComplete(npNode->npLeft, 2 * iIndex + 1, iNumberNodes) && 
+    isComplete(npNode->npRight, 2 * iIndex + 2, iNumberNodes));
+}
+
+//Criando uma função para avaliar se a árvore é perfeita
+bool isPerfect(struct Node* npNode)
+{
+    int iD = treeDepth(npNode);
+    if (npNode == NULL)
+        return true;
+
+    int iNivel = 0;
+
+    if (npNode->npLeft == NULL && npNode->npRight == NULL)
+        return (iD == iNivel + 1);
+
+    if (npNode->npLeft == NULL || npNode->npRight == NULL)
+        return false;
+
+    return isPerfect(npNode->npLeft) && isPerfect(npNode->npRight);
+}
+
+//Criando a função para garantir que 
+void BFS(struct Node* npNode) {
+    Fila f;
+    f.AddFila(npNode);
+
+    while(f.front!=NULL)
+    {
+        Node* temp = f.front;
+        f.RemoveFila();
+
+        cout << temp->iPayload << endl;
+
+        if(temp->npLeft != NULL)
+        {
+            f.AddFila(temp->npLeft);
+        }
+
+        if(temp->npRight != NULL)
+        {
+            f.AddFila(temp->npRight);
+        }
+    }
+    f.displayFila();
+};

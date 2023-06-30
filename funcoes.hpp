@@ -34,4 +34,7 @@ struct ListNode* traversePreOrder(struct ListNode* npListNode, struct Node* npNo
 struct ListNode* treeToList(struct ListNode* npNode);
 struct ListNode* bubbleSort(struct Node* npNode);
 void displayList(struct ListNode* npListNode);
+bool isPerfect(struct Node* npNode);
+bool isComplete(struct Node* npNode, int iIndex, int iCount);
+void BFS(struct Node* npNode);
 #endif
