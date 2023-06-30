@@ -18,4 +18,7 @@ void CreateSecondaryMenu(struct Node* npRoot);
 void CreateCompleteMenu();
 int treeLength(struct Node* npNode);
 int treeDepth(struct Node* npNode);
+bool isPerfect(struct Node* npNode);
+bool isComplete(struct Node* npNode, int iIndex, int iCount);
+void BFS(struct Node* npNode);
 #endif

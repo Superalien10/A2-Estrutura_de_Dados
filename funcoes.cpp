@@ -220,10 +220,9 @@ int treeDepth(struct Node* npNode)
 
 //Função para criar um node de uma fila
 class Fila {
-    private:
+    public:
         Node *front;
         Node *rear;
-    public:
         Fila() 
         {
             front = NULL;
@@ -290,7 +289,7 @@ class Fila {
         }
 };
 
-bool isComplete(Node* npNode, int iIndex, int iNumberNodes)
+bool isComplete(struct Node* npNode, int iIndex, int iNumberNodes)
 {
     if (npNode == nullptr)
         return (true);
@@ -303,26 +302,25 @@ bool isComplete(Node* npNode, int iIndex, int iNumberNodes)
 }
 
 //Criando uma função para avaliar se a árvore é perfeita
-bool IsPerfect(Node* node)
+bool isPerfect(struct Node* npNode)
 {
-    int d = treeDepth(node);
-    if (node == NULL)
+    int iD = treeDepth(npNode);
+    if (npNode == NULL)
         return true;
 
-    int nivel = 0
+    int iNivel = 0;
 
-    if (node->npLeft == NULL && node->npRight == NULL)
-        return (d == nivel + 1);
+    if (npNode->npLeft == NULL && npNode->npRight == NULL)
+        return (iD == iNivel + 1);
 
-    if (node->npLeft == NULL || node->npRight == NULL)
+    if (npNode->npLeft == NULL || npNode->npRight == NULL)
         return false;
 
-    return isPerfectUtil(node->npLeft, d, nivel + 1) &&
-           isPerfectUtil(node->npRight, d, nivel + 1);
+    return isPerfect(npNode->npLeft) && isPerfect(npNode->npRight);
 }
 
 //Criando a função para garantir que 
-void BFS(Node* node) {
+void BFS(struct Node* npNode) {
     Fila f;
     f.AddFila(npNode);
 
@@ -345,18 +343,3 @@ void BFS(Node* node) {
     }
     f.displayFila();
 };
-
-int main()
-{
-    Fila f;
-    Node = new Node();
-    insertNode(Node, 10);
-    insertNode(Node, 20);
-    insertNode(Node, 30);
-    insertNode(Node, 40);
-    insertNode(Node, 50);
-
-    BFS(Node);
-
-    return 0;
-}
