@@ -724,9 +724,17 @@ struct ListNode* insertionSort(struct Node* npNode)
             swapListNodes(&npCurrent, &npTemp);
             if (npTemp->npPrev!=nullptr)
             {
-                while (npTemp->iPayload<npTemp->npPrev->iPayload && npTemp->npPrev!=nullptr)
+                bool bUnordered = true;
+                while (npTemp->npPrev!=nullptr && bUnordered)
                 {
-                    swapListNodes(&npTemp->npPrev, &npTemp);
+                    if (npTemp->iPayload<npTemp->npPrev->iPayload)
+                    {
+                        swapListNodes(&npTemp->npPrev, &npTemp);
+                    }
+                    else
+                    {
+                        bUnordered = false;
+                    }
                 }
             }
         }
@@ -775,9 +783,7 @@ struct ListNode* shellSort(struct Node* npNode)
             {
                 if (npTemp->iPayload>npTemp2->iPayload)
                 {
-                    cout<<"swap"<<npTemp->iPayload<<"e"<<npTemp2->iPayload<<endl;
                     swapListNodes(&npTemp, &npTemp2);
-                    displayList(npHead);
                     npTemp = npTemp2->npNext;
                     while (npTemp3!=nullptr)
                     {
@@ -791,9 +797,7 @@ struct ListNode* shellSort(struct Node* npNode)
                         {
                             if (npTemp3!=nullptr&&npTemp2->iPayload<npTemp3->iPayload)
                             {
-                                cout<<"swap"<<npTemp2->iPayload<<"e"<<npTemp3->iPayload<<endl;
                                 swapListNodes(&npTemp3, &npTemp2);
-                                displayList(npHead);
                             }
                             else
                             {
