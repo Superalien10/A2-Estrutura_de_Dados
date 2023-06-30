@@ -48,7 +48,6 @@ int main()
     cout << "Troca de 1 e ultimo: " << resultado << endl;
     // Teste 3
     npNode1=swapListNodes(&(npNode1->npNext->npNext->npNext), &(npNode1->npNext->npNext->npNext->npNext));
-    cout<<"Chegou aqui"<<endl;
     npTest = npNode1;
     while (npTest->npNext!=nullptr)
     {

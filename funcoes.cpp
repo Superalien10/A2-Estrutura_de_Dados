@@ -217,7 +217,7 @@ struct Node* buildTree(string strDadosIniciais)
         }
         i++;
     }
-    // npRoot = insertNode(npRoot, iData); Um valor zero estava sendo inserido desnecessariamente.
+    // npRoot = insertNode(npRoot, iData); //Um valor zero estava sendo inserido desnecessariamente.
     return npRoot;
 }
 
@@ -373,6 +373,31 @@ struct ListNode* swapListNodes(struct ListNode** npFirst, struct ListNode** npSe
         npOne->npNext=nullptr;
         npTwo->npPrev=nullptr;
         npRoot=npTwo;
+    }
+    else
+    {
+        npTemp = npOne->npPrev;
+        npOne->npPrev = npTwo->npPrev;
+        npTwo->npPrev = npTemp;
+        npTemp = npOne->npNext;
+        npOne->npNext = npTwo->npNext;
+        npTwo->npNext = npTemp;
+        if(npOne->npPrev!=nullptr)
+        {
+            npOne->npPrev->npNext = npOne;
+        }
+        if(npOne->npNext!=nullptr)
+        {
+            npOne->npNext->npPrev = npOne;
+        }
+        if(npTwo->npPrev!=nullptr)
+        {
+            npTwo->npPrev->npNext = npTwo;
+        }
+        if(npTwo->npNext!=nullptr)
+        {
+            npTwo->npNext->npPrev = npTwo;
+        }
     }
     return npRoot;
 }
