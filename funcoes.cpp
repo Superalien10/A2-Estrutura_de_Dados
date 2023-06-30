@@ -93,13 +93,17 @@ void CreateSecondaryMenu(struct Node* npRoot)
         cout << "======================" << endl;
         cout << "1. IMPRIMA O TAMANHO DA ARVORE" << endl;
         cout << "2. IMPRIMA A ALTURA/PROFUNDIDADE DA ARVORE" << endl;
-        cout << "3. ORDENAR COM BUBBLE SORT" << endl;
-        cout << "4. INSERIR ELEMENTO NA ARVORE" << endl;
-        cout << "5. REMOVER ELEMENTO DA ARVORE" << endl;
-        cout << "6. BUSCAR ENDERECO DE MEMORIA DE UM ELEMENTO" << endl;
-        cout << "7. VERIFICAR SE A ARVORE E COMPLETA" << endl;
-        cout << "8. VERIFICAR SE A ARVORE E PERFEITA" << endl;
-        cout << "14. Sair" << endl;
+        cout << "3. INSERIR ELEMENTO NA ARVORE" << endl;
+        cout << "4. REMOVER ELEMENTO DA ARVORE" << endl;
+        cout << "5. BUSCAR ENDERECO DE MEMORIA DE UM ELEMENTO" << endl;
+        cout << "6. VERIFICAR SE A ARVORE E COMPLETA" << endl;
+        cout << "7. VERIFICAR SE A ARVORE E PERFEITA" << endl;
+        cout << "8. BFS" << endl;
+        cout << "9. ORDENAR COM BUBBLE SORT" << endl;
+        cout << "10. ORDENAR COM SELECTION SORT" << endl;
+        cout << "11. ORDENAR COM INSERTION SORT" << endl;
+        cout << "12. ORDENAR COM SHELL SORT" << endl;
+        cout << "13. Sair" << endl;
         cout << "======================" << endl;
         cout << "Digite o numero da opcao: ";
         cin >> iOpcao;
@@ -117,31 +121,25 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 break;
             case 3:
                 timeStart = high_resolution_clock::now();
-                npListRoot = bubbleSort(npRoot);
-                cout << "Lista ordenada: ";
-                displayList(npListRoot);
-                break;
-            case 4:
-                timeStart = high_resolution_clock::now();
                 cout << "Insira o elemento que deseja inserir na arvore: ";
                 int iElemento;  
                 cin >> iElemento;
                 npRoot = insertElement(npRoot, iElemento);
                 break;
-            case 5:
+            case 4:
                 timeStart = high_resolution_clock::now();
-                cout << "Insira o elemento que deseja remover da arvore: ";
+                cout << "Digite o elemento que deseja remover da arvore: ";
                 cin >> iElemento;
                 npRoot = removeElement(npRoot, iElemento);
                 break;
-            case 6:
+            case 5:
                 timeStart = high_resolution_clock::now();
                 cout << "Insira o elemento que deseja buscar na arvore: ";
                 cin >> iElemento;
                 searchElement(npRoot, iElemento);
                 cout << endl;
                 break;
-            case 7:
+            case 6:
                 timeStart = high_resolution_clock::now();
                 if (isComplete(npRoot, 0, treeLength(npRoot))) 
                 {
@@ -151,7 +149,7 @@ void CreateSecondaryMenu(struct Node* npRoot)
                     cout << "A arvore nao e completa." << endl;
                 }
                 break;
-            case 8:
+            case 7:
                 timeStart = high_resolution_clock::now();
                 if (isPerfect(npRoot)) 
                 {
@@ -161,7 +159,34 @@ void CreateSecondaryMenu(struct Node* npRoot)
                     cout << "A arvore nao e perfeita." << endl;
                 }
                 break;
-            case 14:
+            // case 8:
+            //     timeStart = high_resolution_clock::now();
+            //     npListRoot = bfs(npRoot);
+            //     cout << "Lista: ";
+            //     displayList(npListRoot);
+            //     break;
+            case 9:
+                timeStart = high_resolution_clock::now();
+                npListRoot = bubbleSort(npRoot);
+                cout << "Lista ordenada: ";
+                displayList(npListRoot);
+                break;
+            case 10:timeStart = high_resolution_clock::now();
+                npListRoot = selectionSort(npRoot);
+                cout << "Lista ordenada: ";
+                displayList(npListRoot);
+                break;
+            case 11:timeStart = high_resolution_clock::now();
+                npListRoot = insertionSort(npRoot);
+                cout << "Lista ordenada: ";
+                displayList(npListRoot);
+                break;
+            case 12:timeStart = high_resolution_clock::now();
+                npListRoot = shellSort(npRoot);
+                cout << "Lista ordenada: ";
+                displayList(npListRoot);
+                break;
+            case 13:
                 timeStart = high_resolution_clock::now();
                 cout << "Saindo do programa..." << endl;
                 return;
@@ -310,12 +335,6 @@ struct ListNode* treeToList(struct Node* npNode)
 {
     struct ListNode* npListNode = traversePreOrder(nullptr, npNode);
     return npListNode;
-}
-
-// Função que pede uma lista pra treeToList e a ordena pelo método de BubbleSort (Por enquanto, ela não faz a ordenação)
-struct ListNode* bubbleSort(struct Node* npNode)
-{
-    return treeToList(npNode);
 }
 
 // Função que exibe os elementos de uma lista
@@ -554,3 +573,131 @@ void BFS(struct Node* npNode) {
     }
     f.displayFila();
 };
+// Função que troca dois nós de lista
+void swapListNodes(struct ListNode** npFirst, struct ListNode** npSecond)
+{
+    struct ListNode* npOne = *npFirst;
+    struct ListNode* npTwo = *npSecond;
+    struct ListNode* npTemp = npOne->npPrev;
+    npOne->npPrev = npTwo;
+    npOne->npNext = npTwo->npNext;
+    npTwo->npPrev = npTemp;
+    npTwo->npNext = npOne;
+    if(npOne->npNext!=nullptr)
+    {
+        npOne->npNext->npPrev = npOne;
+    }
+    if(npTwo->npPrev!=nullptr)
+    {
+        npTwo->npPrev->npNext = npTwo;
+    }
+}
+
+// Função que pede uma lista pra treeToList e a ordena pelo método de BubbleSort.
+struct ListNode* bubbleSort(struct Node* npNode)
+{
+    struct ListNode* npHead = treeToList(npNode);
+    struct ListNode* npCurrent = npHead;
+    bool bUnordered = false;
+    while(bUnordered==false)
+    {
+        while(npCurrent->npNext!=nullptr)
+        {
+            if(npCurrent->iPayload > npCurrent->npNext->iPayload)
+            {
+                swapListNodes(&npCurrent, &npCurrent->npNext);
+                bUnordered=true;
+            }
+            else
+            {
+                npCurrent = npCurrent->npNext;
+            }
+        }
+    }
+    while(npCurrent->npPrev!=nullptr)
+    {
+        npCurrent = npCurrent->npPrev;
+    }
+    npHead = npCurrent;
+    return npHead;
+}
+
+// Função que pede uma lista pra treeToList e a ordena pelo método de SelectionSort.
+struct ListNode* selectionSort(struct Node* npNode)
+{
+    struct ListNode* npHead = treeToList(npNode);
+    struct ListNode* npCurrent = npHead;
+    while(npCurrent->npNext!=nullptr)
+    {
+        struct ListNode* npMin = npCurrent;
+        struct ListNode* npTemp = npCurrent->npNext;
+        while(npTemp!=nullptr)
+        {
+            if(npTemp->iPayload < npMin->iPayload)
+            {
+                npMin = npTemp;
+            }
+            npTemp = npTemp->npNext;
+        }
+        if(npMin!=npCurrent)
+        {
+            swapListNodes(&npCurrent, &npMin);
+            npCurrent = npMin->npNext;
+        }
+        else
+        {
+            npCurrent = npCurrent->npNext;
+        }
+    }
+    while(npCurrent->npPrev!=nullptr)
+    {
+        npCurrent = npCurrent->npPrev;
+    }
+    npHead=npCurrent;
+    return npHead;
+}
+
+// Função que pede uma lista pra treeToList e a ordena pelo método de InsertionSort.
+struct ListNode* insertionSort(struct Node* npNode)
+{
+    struct ListNode* npHead = treeToList(npNode);
+    struct ListNode* npCurrent = npHead;
+    while(npCurrent->npNext!=nullptr)
+    {
+        struct ListNode* npTemp = npCurrent->npNext;
+        if (npCurrent->iPayload>npTemp->iPayload)
+        {
+            swapListNodes(&npCurrent, &npTemp);
+            if (npTemp->npPrev!=nullptr)
+            {
+                while (npTemp->iPayload<npTemp->npPrev->iPayload && npTemp->npPrev->npPrev!=nullptr)
+                {
+                    swapListNodes(&npTemp, &npTemp->npPrev);
+                    cout<<npTemp->npPrev<<endl;
+                }
+                if (npTemp->iPayload<npTemp->npPrev->iPayload)
+                {
+                    swapListNodes(&npTemp, &npTemp->npPrev);
+                }
+            }
+        }
+        else
+        {
+            npCurrent = npCurrent->npNext;
+        }
+        
+    }
+    while(npCurrent->npPrev!=nullptr)
+    {
+        npCurrent = npCurrent->npPrev;
+    }
+    npHead=npCurrent;
+    return npHead;
+}
+
+// Função que pede uma lista pra treeToList e a ordena pelo método de ShellSort.(Por enquanto, ela não faz a ordenação)
+struct ListNode* shellSort(struct Node* npNode)
+{
+    struct ListNode* npHead = treeToList(npNode);
+    return npHead;
+}
