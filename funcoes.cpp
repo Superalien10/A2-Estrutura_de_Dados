@@ -100,6 +100,7 @@ void CreateSecondaryMenu(struct Node* npRoot)
         cout << "12. ORDENAR COM SHELL SORT" << endl;
         cout << "13. Sair" << endl;
         cout << "======================" << endl;
+        displayList(treeToList(npRoot));
         cout << "Digite o numero da opcao: ";
         cin >> iOpcao;
         cout << endl;
@@ -297,8 +298,12 @@ void displayList(struct ListNode* npListNode)
 
     if (npListNode->npPrev!=nullptr)
     {
-        cout << "Não é possível exibir: meio da Lista" << endl;
-        return;
+        // cout << "Não é possível exibir: meio da Lista" << endl;
+        // return;
+        while (npListNode->npPrev!=nullptr)
+        {
+            npListNode = npListNode->npPrev;
+        }
     }
 
     cout << "Payload: ";
@@ -337,9 +342,10 @@ struct ListNode* bubbleSort(struct Node* npNode)
 {
     struct ListNode* npHead = treeToList(npNode);
     struct ListNode* npCurrent = npHead;
-    bool bUnordered = false;
-    while(bUnordered==false)
+    bool bUnordered = true;
+    while(bUnordered)
     {
+        bUnordered=false;
         while(npCurrent->npNext!=nullptr)
         {
             if(npCurrent->iPayload > npCurrent->npNext->iPayload)
@@ -351,6 +357,10 @@ struct ListNode* bubbleSort(struct Node* npNode)
             {
                 npCurrent = npCurrent->npNext;
             }
+        }
+        while(npCurrent->npPrev!=nullptr)
+        {
+            npCurrent = npCurrent->npPrev;
         }
     }
     while(npCurrent->npPrev!=nullptr)

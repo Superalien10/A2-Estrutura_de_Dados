@@ -27,7 +27,7 @@ struct ListNode
 struct ListNode* newListNode(int iData);
 struct ListNode* insertListNode(struct ListNode* npNode, int iData);
 struct ListNode* traversePreOrder(struct ListNode* npListNode, struct Node* npNode);
-struct ListNode* treeToList(struct ListNode* npNode);
+struct ListNode* treeToList(struct Node* npNode);
 void displayList(struct ListNode* npListNode);
 void swapListNodes(struct ListNode**, struct ListNode**);
 struct ListNode* bubbleSort(struct Node* npNode);
