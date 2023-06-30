@@ -28,12 +28,14 @@ struct ListNode
     struct ListNode* npNext;
     struct ListNode* npPrev;
 };
+bool isComplete(struct Node* npNode, int iIndex, int iNumberNodes);
+bool isPerfect(struct Node* npNode);
 struct ListNode* newListNode(int iData);
 struct ListNode* insertListNode(struct ListNode* npNode, int iData);
 struct ListNode* traversePreOrder(struct ListNode* npListNode, struct Node* npNode);
 struct ListNode* treeToList(struct Node* npNode);
 void displayList(struct ListNode* npListNode);
-void swapListNodes(struct ListNode**, struct ListNode**);
+struct ListNode* swapListNodes(struct ListNode** npFirst, struct ListNode** npSecond);
 struct ListNode* bubbleSort(struct Node* npNode);
 struct ListNode* selectionSort(struct Node*);
 struct ListNode* insertionSort(struct Node*);
