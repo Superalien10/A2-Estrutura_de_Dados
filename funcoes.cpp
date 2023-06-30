@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <chrono>
+#include <unistd.h>
 
 using namespace std;
 using namespace std::chrono;
@@ -118,22 +119,34 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 break;
             case 9:
                 timeStart = high_resolution_clock::now();
-                npListRoot = bubbleSort(npRoot);
+                npListRoot = bubbleSort(npRoot, false);
+                timeStop=high_resolution_clock::now();
+                timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
+                bubbleSort(npRoot, true);
                 cout << "Lista ordenada: ";
                 displayList(npListRoot);
                 break;
             case 10:timeStart = high_resolution_clock::now();
-                npListRoot = selectionSort(npRoot);
+                npListRoot = selectionSort(npRoot, false);
+                timeStop=high_resolution_clock::now();
+                timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
+                selectionSort(npRoot, true);
                 cout << "Lista ordenada: ";
                 displayList(npListRoot);
                 break;
             case 11:timeStart = high_resolution_clock::now();
-                npListRoot = insertionSort(npRoot);
+                npListRoot = insertionSort(npRoot, false);
+                timeStop=high_resolution_clock::now();
+                timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
+                insertionSort(npRoot, true);
                 cout << "Lista ordenada: ";
                 displayList(npListRoot);
                 break;
             case 12:timeStart = high_resolution_clock::now();
-                npListRoot = shellSort(npRoot);
+                npListRoot = shellSort(npRoot, false);
+                timeStop=high_resolution_clock::now();
+                timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
+                shellSort(npRoot, true);
                 cout << "Lista ordenada: ";
                 displayList(npListRoot);
                 break;
@@ -145,8 +158,11 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 cout << "Opcao invalida. Tente novamente." << endl;
         }
 
-        timeStop=high_resolution_clock::now();
-        timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
+        if (iOpcao >= 9 && iOpcao <= 12)
+        {
+            timeStop=high_resolution_clock::now();
+            timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
+        }
         cout << "Tempo de operacao: " << timeDuration.count() << endl;
         cin.ignore();
         cout << "Pressione Enter para continuar...";
@@ -319,7 +335,7 @@ void displayList(struct ListNode* npListNode)
 }
 
 // Função que troca dois nós de lista
-struct ListNode* swapListNodes(struct ListNode** npFirst, struct ListNode** npSecond)
+struct ListNode* swapListNodes(struct ListNode** npFirst, struct ListNode** npSecond, bool visualize=false)
 {
     struct ListNode* npRoot = *npFirst;
     while (npRoot->npPrev!=nullptr)
@@ -329,6 +345,7 @@ struct ListNode* swapListNodes(struct ListNode** npFirst, struct ListNode** npSe
     struct ListNode* npOne = *npFirst;
     struct ListNode* npTwo = *npSecond;
     struct ListNode* npTemp;
+    if (visualize) visualizeList(npRoot, npOne, npTwo);
     if (npOne->npNext==npTwo&&npOne->npPrev!=nullptr)// Teste 3 e 4
     {
         npTemp = npOne->npPrev;
@@ -399,11 +416,12 @@ struct ListNode* swapListNodes(struct ListNode** npFirst, struct ListNode** npSe
             npTwo->npNext->npPrev = npTwo;
         }
     }
+    if (visualize) visualizeList(npRoot, npOne, npTwo);
     return npRoot;
 }
 
 // Função que pede uma lista pra treeToList e a ordena pelo método de BubbleSort.
-struct ListNode* bubbleSort(struct Node* npNode)
+struct ListNode* bubbleSort(struct Node* npNode, bool visualize=false)
 {
     struct ListNode* npHead = treeToList(npNode);
     struct ListNode* npCurrent = npHead;
@@ -415,7 +433,7 @@ struct ListNode* bubbleSort(struct Node* npNode)
         {
             if(npCurrent->iPayload > npCurrent->npNext->iPayload)
             {
-                swapListNodes(&npCurrent, &npCurrent->npNext);
+                swapListNodes(&npCurrent, &npCurrent->npNext, visualize);
                 bUnordered=true;
             }
             else
@@ -437,7 +455,7 @@ struct ListNode* bubbleSort(struct Node* npNode)
 }
 
 // Função que pede uma lista pra treeToList e a ordena pelo método de SelectionSort.
-struct ListNode* selectionSort(struct Node* npNode)
+struct ListNode* selectionSort(struct Node* npNode, bool visualize=false)
 {
     struct ListNode* npHead = treeToList(npNode);
     struct ListNode* npCurrent = npHead;
@@ -455,7 +473,7 @@ struct ListNode* selectionSort(struct Node* npNode)
         }
         if(npMin!=npCurrent)
         {
-            swapListNodes(&npCurrent, &npMin);
+            swapListNodes(&npCurrent, &npMin, visualize);
             npCurrent = npMin->npNext;
         }
         else
@@ -472,7 +490,7 @@ struct ListNode* selectionSort(struct Node* npNode)
 }
 
 // Função que pede uma lista pra treeToList e a ordena pelo método de InsertionSort.
-struct ListNode* insertionSort(struct Node* npNode)
+struct ListNode* insertionSort(struct Node* npNode, bool visualize=false)
 {
     struct ListNode* npHead = treeToList(npNode);
     struct ListNode* npCurrent = npHead;
@@ -481,7 +499,7 @@ struct ListNode* insertionSort(struct Node* npNode)
         struct ListNode* npTemp = npCurrent->npNext;
         if (npCurrent->iPayload>npTemp->iPayload)
         {
-            swapListNodes(&npCurrent, &npTemp);
+            swapListNodes(&npCurrent, &npTemp, visualize);
             if (npTemp->npPrev!=nullptr)
             {
                 bool bUnordered = true;
@@ -489,7 +507,7 @@ struct ListNode* insertionSort(struct Node* npNode)
                 {
                     if (npTemp->iPayload<npTemp->npPrev->iPayload)
                     {
-                        swapListNodes(&npTemp->npPrev, &npTemp);
+                        swapListNodes(&npTemp->npPrev, &npTemp, visualize);
                     }
                     else
                     {
@@ -513,7 +531,7 @@ struct ListNode* insertionSort(struct Node* npNode)
 }
 
 // Função que pede uma lista pra treeToList e a ordena pelo método de ShellSort.(Por enquanto, ela não faz a ordenação)
-struct ListNode* shellSort(struct Node* npNode)
+struct ListNode* shellSort(struct Node* npNode, bool visualize=false)
 {
     struct ListNode* npHead = treeToList(npNode);
     int n=0;
@@ -543,7 +561,7 @@ struct ListNode* shellSort(struct Node* npNode)
             {
                 if (npTemp->iPayload>npTemp2->iPayload)
                 {
-                    swapListNodes(&npTemp, &npTemp2);
+                    swapListNodes(&npTemp, &npTemp2, visualize);
                     npTemp = npTemp2->npNext;
                     while (npTemp3!=nullptr)
                     {
@@ -557,7 +575,7 @@ struct ListNode* shellSort(struct Node* npNode)
                         {
                             if (npTemp3!=nullptr&&npTemp2->iPayload<npTemp3->iPayload)
                             {
-                                swapListNodes(&npTemp3, &npTemp2);
+                                swapListNodes(&npTemp3, &npTemp2, visualize);
                             }
                             else
                             {
@@ -586,4 +604,47 @@ struct ListNode* shellSort(struct Node* npNode)
     }
     npHead=npTemp;
     return npHead;
+}
+
+// Função que exibe uma representação gráfica de3 uma lista.
+void visualizeList(struct ListNode* npListNode, struct ListNode* npActive1, struct ListNode* npActive2)
+{
+    if (npListNode == nullptr)
+    {
+        cout << "Não é possível exibir: lista vazia" << endl;
+        return;
+    }
+
+    if (npListNode->npPrev!=nullptr)
+    {
+        while (npListNode->npPrev!=nullptr)
+        {
+            npListNode = npListNode->npPrev;
+        }
+    }
+
+    cout << "Ordenação em andamento: " << endl;
+
+    while (npListNode!=nullptr)
+    {
+        if (npListNode==npActive1||npListNode==npActive2)
+        {
+            cout << " | ";
+            for (int i=0; i<npListNode->iPayload; i++)
+            {
+                cout << "#";
+            }
+        }
+        else
+        {
+            cout << " | ";
+            for (int i=0; i<npListNode->iPayload; i++)
+            {
+                cout << "*";
+            }
+        }
+        cout << endl;
+        npListNode = npListNode->npNext;
+    }
+    sleep(1);
 }

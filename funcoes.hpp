@@ -29,9 +29,10 @@ struct ListNode* insertListNode(struct ListNode* npNode, int iData);
 struct ListNode* traversePreOrder(struct ListNode* npListNode, struct Node* npNode);
 struct ListNode* treeToList(struct Node* npNode);
 void displayList(struct ListNode* npListNode);
-struct ListNode* swapListNodes(struct ListNode**, struct ListNode**);
-struct ListNode* bubbleSort(struct Node* npNode);
-struct ListNode* selectionSort(struct Node*);
-struct ListNode* insertionSort(struct Node*);
-struct ListNode* shellSort(struct Node*);
+struct ListNode* swapListNodes(struct ListNode**, struct ListNode**, bool);
+struct ListNode* bubbleSort(struct Node* npNode, bool);
+struct ListNode* selectionSort(struct Node*,bool);
+struct ListNode* insertionSort(struct Node*, bool);
+struct ListNode* shellSort(struct Node*, bool);
+void visualizeList(struct ListNode*, struct ListNode*, struct ListNode*);
 #endif
