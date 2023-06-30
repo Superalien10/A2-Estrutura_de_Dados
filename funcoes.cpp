@@ -456,105 +456,102 @@ void searchElement(struct Node* npNode, int iData)
 }
 
 //Estrutura de um node de uma fila
-struct FilaNode {
-    Node* treeNode;
-    FilaNode* next;
+struct sFilaNode {
+    Node* pTreeNode;
+    sFilaNode* pNext;
 };
 
-//Classe de faila
-class Fila {
+//Classe da fila
+class CFila {
 public:
-    FilaNode *front, *rear;
+    sFilaNode* pFront, * pRear;
 
-    Fila() {
-        front = NULL;
-        rear = NULL;
+    CFila() {
+        pFront = nullptr;
+        pRear = nullptr;
     }
 
-    void AddFila(Node* node) {
-        FilaNode* temp = new FilaNode;
-        temp->treeNode = node;
-        temp->next = NULL;
+    void AddFila(Node* pNode) {
+        sFilaNode* pTemp = new sFilaNode;
+        pTemp->pTreeNode = pNode;
+        pTemp->pNext = nullptr;
 
-        if (rear == NULL) {
-            front = rear = temp;
+        if (pRear == nullptr) {
+            pFront = pRear = pTemp;
             return;
         }
 
-        rear->next = temp;
-        rear = temp;
+        pRear->pNext = pTemp;
+        pRear = pTemp;
     }
 
     void RemoveFila() {
-        if (front == NULL) {
+        if (pFront == nullptr) {
             cout << "A fila está vazia" << endl;
             return;
         }
 
-        FilaNode* temp = front;
-        front = front->next;
+        sFilaNode* pTemp = pFront;
+        pFront = pFront->pNext;
 
-        if (front == NULL) rear = NULL;
+        if (pFront == nullptr) {
+            pRear = nullptr;
+        }
 
-        delete temp;
+        delete pTemp;
     }
 
-    void displayFila() {
-        FilaNode* temp = front;
-        while (temp != NULL) {
-            cout << temp->treeNode->iPayload << " ";
-            temp = temp->next;
+    void DisplayFila() {
+        sFilaNode* pTemp = pFront;
+        while (pTemp != nullptr) {
+            cout << pTemp->pTreeNode->iPayload << " ";
+            pTemp = pTemp->pNext;
         }
         cout << endl;
     }
 };
 
-bool isComplete(struct Node* npNode, int iIndex, int iNumberNodes)
-{
-    if (npNode == nullptr)
-        return (true);
+bool IsComplete(Node* pNpNode, int iIndex, int iNumberNodes) {
+    if (pNpNode == nullptr)
+        return true;
 
     if (iIndex >= iNumberNodes)
-        return (false);
+        return false;
 
-    return (isComplete(npNode->npLeft, 2 * iIndex + 1, iNumberNodes) && 
-    isComplete(npNode->npRight, 2 * iIndex + 2, iNumberNodes));
+    return (IsComplete(pNpNode->npLeft, 2 * iIndex + 1, iNumberNodes) &&
+            IsComplete(pNpNode->npRight, 2 * iIndex + 2, iNumberNodes));
 }
 
-//Criando uma função para avaliar se a árvore é perfeita
-bool isPerfect(struct Node* npNode)
-{
-    int iD = treeDepth(npNode);
-    if (npNode == NULL)
+bool IsPerfect(Node* pNpNode) {
+    int iD = treeDepth(pNpNode);
+    if (pNpNode == nullptr)
         return true;
 
     int iNivel = 0;
 
-    if (npNode->npLeft == NULL && npNode->npRight == NULL)
+    if (pNpNode->npLeft == nullptr && pNpNode->npRight == nullptr)
         return (iD == iNivel + 1);
 
-    if (npNode->npLeft == NULL || npNode->npRight == NULL)
+    if (pNpNode->npLeft == nullptr || pNpNode->npRight == nullptr)
         return false;
-        
-    return isPerfect(npNode->npLeft) && isPerfect(npNode->npRight);
+
+    return IsPerfect(pNpNode->npLeft) && IsPerfect(pNpNode->npRight);
 }
 
-//Criando a função para que seja realizada a travessia BFS
-void BFS(Node* node) {
-    if (node == NULL) return;
+void BFS(Node* pNode) {
+    if (pNode == nullptr) return;
 
-    Fila f;
-    f.AddFila(node);
+    CFila oFila;
+    oFila.AddFila(pNode);
 
-    while (f.front != NULL) 
-    {
-        Node* temp = f.front->treeNode;
-        cout << temp->iPayload << endl;
+    while (oFila.pFront != nullptr) {
+        Node* pTemp = oFila.pFront->pTreeNode;
+        cout << pTemp->iPayload << endl;
 
-        if (temp->npLeft != NULL) f.AddFila(temp->npLeft);
-        if (temp->npRight != NULL) f.AddFila(temp->npRight);
+        if (pTemp->npLeft != nullptr) oFila.AddFila(pTemp->npLeft);
+        if (pTemp->npRight != nullptr) oFila.AddFila(pTemp->npRight);
 
-        f.RemoveFila();
+        oFila.RemoveFila();
     }
 }
 
