@@ -329,6 +329,7 @@ struct ListNode* traversePreOrder(struct ListNode* npListNode, struct Node* npNo
         traversePreOrder(npListNode, npNode->npLeft);
         traversePreOrder(npListNode, npNode->npRight);
     }
+    return npListNode;
 }
 
 // Função que cria uma lista com base na árvore
@@ -584,37 +585,49 @@ struct ListNode* swapListNodes(struct ListNode** npFirst, struct ListNode** npSe
     struct ListNode* npOne = *npFirst;
     struct ListNode* npTwo = *npSecond;
     struct ListNode* npTemp;
-    if (npOne->npNext==npTwo&&npOne->npPrev!=nullptr)
+    if (npOne->npNext==npTwo&&npOne->npPrev!=nullptr)// Teste 3 e 4
     {
         npTemp = npOne->npPrev;
         npOne->npPrev = npTwo;
         npOne->npNext = npTwo->npNext;
         npTwo->npPrev = npTemp;
         npTwo->npNext = npOne;
+        npTemp->npNext = npTwo;
         if(npOne->npNext!=nullptr)
         {
             npOne->npNext->npPrev = npOne;
         }
     }
-    else if (npOne->npNext==npTwo&&npTwo->npNext!=nullptr)
+    else if (npOne->npNext==npTwo&&npTwo->npNext!=nullptr)//Teste 1
     {
         npTemp = npTwo->npNext;
         npTwo->npNext = npOne;
         npTwo->npPrev = npOne->npPrev;
         npOne->npNext = npTemp;
         npOne->npPrev = npTwo;
+        npTemp->npPrev = npOne;
         if(npTwo->npPrev!=nullptr)
         {
             npTwo->npPrev->npNext = npTwo;
         }
         npRoot=npTwo;
     }
-    else if (npOne->npNext==npTwo)
+    else if (npOne->npNext==npTwo)//Teste 
     {
         npOne->npPrev=npTwo;
         npOne->npNext=nullptr;
         npTwo->npPrev=nullptr;
         npTwo->npNext=npOne;
+        npRoot=npTwo;
+    }
+    else if (npOne->npPrev==nullptr&&npTwo->npNext==nullptr)// Teste 2
+    {
+        npOne->npPrev=npTwo->npPrev;
+        npTwo->npNext=npOne->npNext;
+        npOne->npPrev->npNext=npOne;
+        npTwo->npNext->npPrev=npTwo;
+        npOne->npNext=nullptr;
+        npTwo->npPrev=nullptr;
         npRoot=npTwo;
     }
     return npRoot;
