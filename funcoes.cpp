@@ -549,30 +549,25 @@ bool isPerfect(struct Node* npNode)
     return isPerfect(npNode->npLeft) && isPerfect(npNode->npRight);
 }
 
-//Criando a função para garantir que 
-void BFS(struct Node* npNode) {
-    Fila f;
-    f.AddFila(npNode);
+//Criando a função para que seja realizada a travessia BFS
+void BFS(Node* root) {
+    if (root == NULL) return;
 
-    while(f.front!=NULL)
-    {
-        Node* temp = f.front;
-        f.RemoveFila();
+    Fila q;
+    q.AddFila(root);
 
+    while (q.front != NULL) {
+        Node* temp = q.front;
         cout << temp->iPayload << endl;
 
-        if(temp->npLeft != NULL)
-        {
-            f.AddFila(temp->npLeft);
-        }
+        if (temp->npLeft != NULL) q.AddFila(temp->npLeft);
+        if (temp->npRight != NULL) q.AddFila(temp->npRight);
 
-        if(temp->npRight != NULL)
-        {
-            f.AddFila(temp->npRight);
-        }
+        q.RemoveFila();
     }
-    f.displayFila();
-};
+    q.displayFila();
+}
+
 // Função que troca dois nós de lista
 void swapListNodes(struct ListNode** npFirst, struct ListNode** npSecond)
 {
