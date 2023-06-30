@@ -21,6 +21,7 @@ int treeDepth(struct Node* npNode);
 struct ListNode
 {
     int iPayload;
+    int iPosition;
     struct ListNode* npNext;
     struct ListNode* npPrev;
 };
@@ -30,9 +31,11 @@ struct ListNode* traversePreOrder(struct ListNode* npListNode, struct Node* npNo
 struct ListNode* treeToList(struct Node* npNode);
 void displayList(struct ListNode* npListNode);
 struct ListNode* swapListNodes(struct ListNode**, struct ListNode**, bool);
-struct ListNode* bubbleSort(struct Node* npNode, bool);
-struct ListNode* selectionSort(struct Node*,bool);
-struct ListNode* insertionSort(struct Node*, bool);
-struct ListNode* shellSort(struct Node*, bool);
+struct ListNode* bubbleSort(struct ListNode*, bool);
+struct ListNode* selectionSort(struct ListNode*,bool);
+struct ListNode* insertionSort(struct ListNode*, bool);
+struct ListNode* shellSort(struct ListNode*, bool);
 void visualizeList(struct ListNode*, struct ListNode*, struct ListNode*);
+void setPositions(struct ListNode*, struct ListNode*);
+struct ListNode* duplicateList(struct ListNode*);
 #endif
