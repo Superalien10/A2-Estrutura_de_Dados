@@ -468,12 +468,18 @@ public:
         pFront = nullptr;
         pRear = nullptr;
     }
-//Função que adiciona um elemento na fila
+
+    //Função para adicionar o elemento na fila
     void AddFila(Node* pNode) {
+
+        //Criando um novo nó da fila
         sFilaNode* pTemp = new sFilaNode;
+
+        //Definindo o novo nó como o pNode e seu próximo como ponteiro nulo
         pTemp->pTreeNode = pNode;
         pTemp->pNext = nullptr;
 
+        //Se a fila estiver vazia, o da frente e o último são o mesmo
         if (pRear == nullptr) {
             pFront = pRear = pTemp;
             return;
@@ -482,23 +488,28 @@ public:
         pRear->pNext = pTemp;
         pRear = pTemp;
     }
-//Função que remove um elemento da fila
+
+    //Função para remover o último elemento da fila
     void RemoveFila() {
         if (pFront == nullptr) {
             cout << "A fila está vazia" << endl;
             return;
         }
 
+        //Armazenando o ponteiro do primeiro nó e atualizando
         sFilaNode* pTemp = pFront;
         pFront = pFront->pNext;
 
+        //Caso a fila fique vazia, colocar o último nó como nulo
         if (pFront == nullptr) {
             pRear = nullptr;
         }
 
+        //Liberando a memória do nó
         delete pTemp;
     }
-//Função que exibe a fila
+
+    //Função para exibir a fila
     void DisplayFila() {
         sFilaNode* pTemp = pFront;
         while (pTemp != nullptr) {
@@ -509,46 +520,57 @@ public:
     }
 };
 
-//Função que verifica se a árvore é completa
-bool isComplete(Node* pNpNode, int iIndex, int iNumberNodes) {
+//Função para verificar se a árvore é completa
+bool IsComplete(Node* pNpNode, int iIndex, int iNumberNodes) {
     if (pNpNode == nullptr)
         return true;
 
+    //Se o índice atual for maior ou 
     if (iIndex >= iNumberNodes)
         return false;
 
-    return (isComplete(pNpNode->npLeft, 2 * iIndex + 1, iNumberNodes) &&
-            isComplete(pNpNode->npRight, 2 * iIndex + 2, iNumberNodes));
+    //Verificando recursivamente
+    return (IsComplete(pNpNode->npLeft, 2 * iIndex + 1, iNumberNodes) &&
+            IsComplete(pNpNode->npRight, 2 * iIndex + 2, iNumberNodes));
 }
 
-// Função que verifica se a árvore é perfeita
-bool isPerfect(Node* pNpNode) {
+//Função para verificar se a árvore é perfeita
+bool IsPerfect(Node* pNpNode) {
     int iD = treeDepth(pNpNode);
+
+    //uma árvore vazia é considerada completa
     if (pNpNode == nullptr)
         return true;
 
     int iNivel = 0;
 
+    //Verificando a profundidade e se o nó tem 2 filhos
     if (pNpNode->npLeft == nullptr && pNpNode->npRight == nullptr)
         return (iD == iNivel + 1);
 
-    if (pNpNode->npLeft == nullptr || pNpNode->npRight == nullptr)
-        return false;
+    //Verificando se o nó atual tem um filho ou nenhum
+    if (pNpNode->npLeft == nullptr || pNpNode->npRight == nullptr)3
 
-    return isPerfect(pNpNode->npLeft) && isPerfect(pNpNode->npRight);
+        //caso a condição prevaleça, a árvore não é perfeita
+        return false;
+    
+    return IsPerfect(pNpNode->npLeft) && IsPerfect(pNpNode->npRight);
 }
 
-// Função que imprime a árvore em BFS
+//Função para realizar a travessia (Breadth-First Search)
 void BFS(Node* pNode) {
     if (pNode == nullptr) return;
 
+    //Criando uma fila
     CFila oFila;
     oFila.AddFila(pNode);
 
+    //Loop para armazenar o nó na fila e printar
     while (oFila.pFront != nullptr) {
         Node* pTemp = oFila.pFront->pTreeNode;
         cout << pTemp->iPayload << endl;
 
+        //Verificando se os nos existem e adicionando na fila
         if (pTemp->npLeft != nullptr) oFila.AddFila(pTemp->npLeft);
         if (pTemp->npRight != nullptr) oFila.AddFila(pTemp->npRight);
 
