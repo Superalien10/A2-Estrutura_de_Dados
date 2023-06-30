@@ -230,84 +230,131 @@ class Fila {
         }
 
         // Função para adicionar árvores na fila
-        void AddFila(Node* node) {
-            if(front == NULL) {
+        void AddFila(Node* node) 
+        {
+            if(front == NULL) 
+            {
                 front = node;
                 rear = node;
-            } else {
+            } else 
+            {
                 rear->npRight = node;
                 rear = node;
             }
         }
 
         //Função para remover o primeiro elemento da fila (First In First Out)
-        void RemoveFila() {
-            if(front == NULL) {
-                cout << "Fila vazia" << endl;
-            } else {
+        void RemoveFila() 
+        {
+            if(front == NULL) 
+            {
+                cout << "A fila está vazia" << endl;
+            } 
+            else 
+            {
                 Node* temp = front;
                 front = front->npRight;
                 delete temp;
             }
         }
 
-        void inorderTraversal(Node* root) 
+        void inorderTraversal(Node* node) 
         {
-            if(root != NULL) 
+            if(node != NULL) 
             {
-            inorderTraversal(root->npLeft);  // Visita o nó esquerdo
-            cout << root->iPayload << " ";   // Visita o nó raiz
-            inorderTraversal(root->npRight); // Visita o nó direito
+            inorderTraversal(node->npLeft);
+            cout << node->iPayload << " ";   
+            inorderTraversal(node->npRight); 
             }
         }
 
 
         //Função para exibir a fila
-        void displayFila() 
-        {
+        void displayFila() {
             if(front == NULL) 
             {
-                cout << "Fila vazia" << endl;
+            cout << "Fila vazia" << endl;
             } 
             else 
             {
                 Node* temp = front;
                 while(temp != NULL) 
                 {
-                    cout << temp->iPayload << " ";
+                    inorderTraversal(temp); 
+                    cout << endl;
                     temp = temp->npRight;
                 }
-                cout << endl;
             }
+        
         }
 };
 
 
+
 bool IsComplete(struct Node* npNode)
 {
+    while(npNode != NULL)
+    {
+        npNode
+    }
+    return true;
+};
 
-}
-
-
-//Função para analisar se a árvore é perfeita ou não
-bool IsPerfect(struct Node* npNode)
+//Criando uma função para avaliar se a árvore é perfeita
+bool IsPerfect(Node* node)
 {
+    int d = treeDepth(node);
+    if (node == NULL)
+        return true;
 
+    int nivel = 0
+
+    if (node->npLeft == NULL && node->npRight == NULL)
+        return (d == nivel + 1);
+
+    if (node->npLeft == NULL || node->npRight == NULL)
+        return false;
+
+    return isPerfectUtil(node->npLeft, d, nivel + 1) &&
+           isPerfectUtil(node->npRight, d, nivel + 1);
 }
+
+//Criando a função para garantir que 
+void BFS(Node* node) {
+    Fila f;
+    f.AddFila(npNode);
+
+    while(f.front!=NULL)
+    {
+        Node* temp = f.front;
+        f.RemoveFila();
+
+        cout << temp->iPayload << endl;
+
+        if(temp->npLeft != NULL)
+        {
+            f.AddFila(temp->npLeft);
+        }
+
+        if(temp->npRight != NULL)
+        {
+            f.AddFila(temp->npRight);
+        }
+    }
+    f.displayFila();
+};
 
 int main()
 {
     Fila f;
-    f.AddFila(10);
-    f.AddFila(20);
-    f.AddFila(25);
-    f.AddFila(35);
-    f.AddFila(40);
-    f.AddFila(45);
-    f.AddFila(50);
-    f.AddFila(60);
-    f.displayFila();
-    f.RemoveFila();
-    f.displayFila();
+    Node = newNode();
+    insertNode(Node, 10);
+    insertNode(Node, 20);
+    insertNode(Node, 30);
+    insertNode(Node, 40);
+    insertNode(Node, 50);
+
+    BFS(Node);
+
     return 0;
 }
