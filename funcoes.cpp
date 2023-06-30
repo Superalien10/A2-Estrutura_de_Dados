@@ -23,10 +23,9 @@ string Readtxt(string strNomeArquivo)
         while (getline(ifsArquivo, strLinha)) {
             strConteudoArquivo += strLinha + " ";
         }
-
+        strConteudoArquivo.pop_back();
         //Se quiser ver o conteudo do arquivo, descomente a linha abaixo
         //cout << "Conteúdo do arquivo:\n" << strConteudoArquivo << endl;
-
         return strConteudoArquivo;
         ifsArquivo.close(); 
     } else {
@@ -35,6 +34,7 @@ string Readtxt(string strNomeArquivo)
     }
 
 }
+
 
 // Função para criar o menu inicial
 string CreateInicialMenu()
@@ -60,6 +60,7 @@ string CreateInicialMenu()
                 cout << "Opcao 1 selecionada." << endl;
                 cout << "Digite o nome do arquivo com a extensao: ";
                 cin >> strNomeArquivo;
+                timeStart = high_resolution_clock::now();
                 return Readtxt(strNomeArquivo);
                 break;
             case 2:
@@ -268,7 +269,7 @@ struct Node* buildTree(string strDadosIniciais)
         }
         i++;
     }
-    // npRoot = insertNode(npRoot, iData); Um valor zero estava sendo inserido desnecessariamente.
+    npRoot = insertNode(npRoot, iData); 
     return npRoot;
 }
 
