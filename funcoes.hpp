@@ -30,6 +30,7 @@ struct ListNode
 };
 bool isComplete(struct Node* npNode, int iIndex, int iNumberNodes);
 bool isPerfect(struct Node* npNode);
+void BFS(Node* pNode);
 struct ListNode* newListNode(int iData);
 struct ListNode* insertListNode(struct ListNode* npNode, int iData);
 struct ListNode* traversePreOrder(struct ListNode* npListNode, struct Node* npNode);

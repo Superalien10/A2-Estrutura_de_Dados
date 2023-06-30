@@ -106,7 +106,6 @@ void CreateSecondaryMenu(struct Node* npRoot)
         cout << "12. ORDENAR COM SHELL SORT" << endl;
         cout << "13. Sair" << endl;
         cout << "======================" << endl;
-        displayList(treeToList(npRoot));
         cout << "Digite o numero da opcao: ";
         cin >> iOpcao;
         cout << endl;
@@ -161,12 +160,11 @@ void CreateSecondaryMenu(struct Node* npRoot)
                     cout << "A arvore nao e perfeita." << endl;
                 }
                 break;
-            // case 8:
-            //     timeStart = high_resolution_clock::now();
-            //     npListRoot = bfs(npRoot);
-            //     cout << "Lista: ";
-            //     displayList(npListRoot);
-            //     break;
+            case 8:
+                timeStart = high_resolution_clock::now();
+                cout << "BFS: " << endl;
+                BFS(npRoot);
+                break;
             case 9:
                 timeStart = high_resolution_clock::now();
                 npListRoot = bubbleSort(npRoot);
@@ -470,7 +468,7 @@ public:
         pFront = nullptr;
         pRear = nullptr;
     }
-
+//Função que adiciona um elemento na fila
     void AddFila(Node* pNode) {
         sFilaNode* pTemp = new sFilaNode;
         pTemp->pTreeNode = pNode;
@@ -484,7 +482,7 @@ public:
         pRear->pNext = pTemp;
         pRear = pTemp;
     }
-
+//Função que remove um elemento da fila
     void RemoveFila() {
         if (pFront == nullptr) {
             cout << "A fila está vazia" << endl;
@@ -500,7 +498,7 @@ public:
 
         delete pTemp;
     }
-
+//Função que exibe a fila
     void DisplayFila() {
         sFilaNode* pTemp = pFront;
         while (pTemp != nullptr) {
@@ -511,18 +509,20 @@ public:
     }
 };
 
-bool IsComplete(Node* pNpNode, int iIndex, int iNumberNodes) {
+//Função que verifica se a árvore é completa
+bool isComplete(Node* pNpNode, int iIndex, int iNumberNodes) {
     if (pNpNode == nullptr)
         return true;
 
     if (iIndex >= iNumberNodes)
         return false;
 
-    return (IsComplete(pNpNode->npLeft, 2 * iIndex + 1, iNumberNodes) &&
-            IsComplete(pNpNode->npRight, 2 * iIndex + 2, iNumberNodes));
+    return (isComplete(pNpNode->npLeft, 2 * iIndex + 1, iNumberNodes) &&
+            isComplete(pNpNode->npRight, 2 * iIndex + 2, iNumberNodes));
 }
 
-bool IsPerfect(Node* pNpNode) {
+// Função que verifica se a árvore é perfeita
+bool isPerfect(Node* pNpNode) {
     int iD = treeDepth(pNpNode);
     if (pNpNode == nullptr)
         return true;
@@ -535,9 +535,10 @@ bool IsPerfect(Node* pNpNode) {
     if (pNpNode->npLeft == nullptr || pNpNode->npRight == nullptr)
         return false;
 
-    return IsPerfect(pNpNode->npLeft) && IsPerfect(pNpNode->npRight);
+    return isPerfect(pNpNode->npLeft) && isPerfect(pNpNode->npRight);
 }
 
+// Função que imprime a árvore em BFS
 void BFS(Node* pNode) {
     if (pNode == nullptr) return;
 
