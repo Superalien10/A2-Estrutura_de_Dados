@@ -318,23 +318,50 @@ void displayList(struct ListNode* npListNode)
 }
 
 // Função que troca dois nós de lista
-void swapListNodes(struct ListNode** npFirst, struct ListNode** npSecond)
+struct ListNode* swapListNodes(struct ListNode** npFirst, struct ListNode** npSecond)
 {
+    struct ListNode* npRoot = *npFirst;
+    while (npRoot->npPrev!=nullptr)
+    {
+        npRoot = npRoot->npPrev;
+    }
     struct ListNode* npOne = *npFirst;
     struct ListNode* npTwo = *npSecond;
-    struct ListNode* npTemp = npOne->npPrev;
-    npOne->npPrev = npTwo;
-    npOne->npNext = npTwo->npNext;
-    npTwo->npPrev = npTemp;
-    npTwo->npNext = npOne;
-    if(npOne->npNext!=nullptr)
+    struct ListNode* npTemp;
+    if (npOne->npNext==npTwo&&npOne->npPrev!=nullptr)
     {
-        npOne->npNext->npPrev = npOne;
+        npTemp = npOne->npPrev;
+        npOne->npPrev = npTwo;
+        npOne->npNext = npTwo->npNext;
+        npTwo->npPrev = npTemp;
+        npTwo->npNext = npOne;
+        if(npOne->npNext!=nullptr)
+        {
+            npOne->npNext->npPrev = npOne;
+        }
     }
-    if(npTwo->npPrev!=nullptr)
+    else if (npOne->npNext==npTwo&&npTwo->npNext!=nullptr)
     {
-        npTwo->npPrev->npNext = npTwo;
+        npTemp = npTwo->npNext;
+        npTwo->npNext = npOne;
+        npTwo->npPrev = npOne->npPrev;
+        npOne->npNext = npTemp;
+        npOne->npPrev = npTwo;
+        if(npTwo->npPrev!=nullptr)
+        {
+            npTwo->npPrev->npNext = npTwo;
+        }
+        npRoot=npTwo;
     }
+    else if (npOne->npNext==npTwo)
+    {
+        npOne->npPrev=npTwo;
+        npOne->npNext=nullptr;
+        npTwo->npPrev=nullptr;
+        npTwo->npNext=npOne;
+        npRoot=npTwo;
+    }
+    return npRoot;
 }
 
 // Função que pede uma lista pra treeToList e a ordena pelo método de BubbleSort.
@@ -419,14 +446,9 @@ struct ListNode* insertionSort(struct Node* npNode)
             swapListNodes(&npCurrent, &npTemp);
             if (npTemp->npPrev!=nullptr)
             {
-                while (npTemp->iPayload<npTemp->npPrev->iPayload && npTemp->npPrev->npPrev!=nullptr)
+                while (npTemp->iPayload<npTemp->npPrev->iPayload && npTemp->npPrev!=nullptr)
                 {
-                    swapListNodes(&npTemp, &npTemp->npPrev);
-                    cout<<npTemp->npPrev<<endl;
-                }
-                if (npTemp->iPayload<npTemp->npPrev->iPayload)
-                {
-                    swapListNodes(&npTemp, &npTemp->npPrev);
+                    swapListNodes(&npTemp->npPrev, &npTemp);
                 }
             }
         }
@@ -475,7 +497,9 @@ struct ListNode* shellSort(struct Node* npNode)
             {
                 if (npTemp->iPayload>npTemp2->iPayload)
                 {
+                    cout<<"swap"<<npTemp->iPayload<<"e"<<npTemp2->iPayload<<endl;
                     swapListNodes(&npTemp, &npTemp2);
+                    displayList(npHead);
                     npTemp = npTemp2->npNext;
                     while (npTemp3!=nullptr)
                     {
@@ -489,7 +513,9 @@ struct ListNode* shellSort(struct Node* npNode)
                         {
                             if (npTemp3!=nullptr&&npTemp2->iPayload<npTemp3->iPayload)
                             {
+                                cout<<"swap"<<npTemp2->iPayload<<"e"<<npTemp3->iPayload<<endl;
                                 swapListNodes(&npTemp2, &npTemp3);
+                                displayList(npHead);
                             }
                             else
                             {
