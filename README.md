@@ -18,6 +18,7 @@ Esse programa oferece um total de diversas funcionalidades e para ter acesso a e
 A partir disso, nota-se que há 2 opções para construir uma árvore binária, a partir de um arquivo .txt e inserindo os próprios dados no terminal. Ambos precisam estar no seguinte formato, como 15 10 8 12 20 18 25 7 9 11 13 17 19 23 26. 
 
 Logo após a construção da árvore binária, aparece um menu secundário:
+
 ![Imagem do WhatsApp de 2023-07-01 à(s) 01 56 46](https://github.com/Superalien10/A2-Estrutura_de_Dados/assets/103382148/4e8465e8-4107-4fe7-aba8-6a0967c58bd6)
 
 Como a árvore já foi construída, o menu secundário apresenta todas as diversas funcionalidades para realizar modificações dentro da árvore já estabelecida. Segue a lista e a descrição sobre o que cada funcionalidade do menu secundário se responsabiliza:
