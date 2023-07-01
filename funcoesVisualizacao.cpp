@@ -14,7 +14,7 @@ void visualizeList(struct ListNode* npListNode, struct ListNode* npActive1, stru
     struct ListNode* npTemp = npListNode;
     if (npTemp == nullptr)
     {
-        cout << "Não é possível exibir: lista vazia" << endl;
+        cout << "Nao e possivel exibir: lista vazia" << endl;
         return;
     }
 
@@ -26,7 +26,7 @@ void visualizeList(struct ListNode* npListNode, struct ListNode* npActive1, stru
         }
     }
 
-    cout << "Ordenação em andamento: " << endl;
+    cout << "Ordenacao em andamento: " << endl;
 
     while (npTemp!=nullptr)
     {
