@@ -64,8 +64,6 @@ void displayList(struct ListNode* npListNode)
 
     if (npListNode->npPrev!=nullptr)
     {
-        // cout << "Não é possível exibir: meio da Lista" << endl;
-        // return;
         while (npListNode->npPrev!=nullptr)
         {
             npListNode = npListNode->npPrev;
@@ -94,8 +92,9 @@ struct ListNode* swapListNodes(struct ListNode** npFirst, struct ListNode** npSe
     struct ListNode* npOne = *npFirst;
     struct ListNode* npTwo = *npSecond;
     struct ListNode* npTemp;
+    // Se a variável visualize for verdadeira, a função visualizeList é chamada para mostrar o processo de troca dos nós.
     if (visualize) visualizeList(npRoot, npOne, npTwo);
-    if (npOne->npNext==npTwo&&npOne->npPrev!=nullptr)// Teste 3 e 4
+    if (npOne->npNext==npTwo&&npOne->npPrev!=nullptr)
     {
         npTemp = npOne->npPrev;
         npOne->npPrev = npTwo;
@@ -108,7 +107,7 @@ struct ListNode* swapListNodes(struct ListNode** npFirst, struct ListNode** npSe
             npOne->npNext->npPrev = npOne;
         }
     }
-    else if (npOne->npNext==npTwo&&npTwo->npNext!=nullptr)//Teste 1
+    else if (npOne->npNext==npTwo&&npTwo->npNext!=nullptr)
     {
         npTemp = npTwo->npNext;
         npTwo->npNext = npOne;
@@ -130,7 +129,7 @@ struct ListNode* swapListNodes(struct ListNode** npFirst, struct ListNode** npSe
         npTwo->npNext=npOne;
         npRoot=npTwo;
     }
-    else if (npOne->npPrev==nullptr&&npTwo->npNext==nullptr)// Teste 2
+    else if (npOne->npPrev==nullptr&&npTwo->npNext==nullptr)
     {
         npOne->npPrev=npTwo->npPrev;
         npTwo->npNext=npOne->npNext;
@@ -165,11 +164,13 @@ struct ListNode* swapListNodes(struct ListNode** npFirst, struct ListNode** npSe
             npTwo->npNext->npPrev = npTwo;
         }
     }
+    // Se a variável visualize for verdadeira, a função visualizeList é chamada para mostrar o processo de troca dos nós. Tanto o antes como o depois da troca são representados.
     if (visualize) visualizeList(npRoot, npOne, npTwo);
     return npRoot;
 }
 
-// Função que pede uma lista pra treeToList e a ordena pelo método de BubbleSort.
+
+// Função que ordena uma lista pelo método de BubbleSort.
 struct ListNode* bubbleSort(struct ListNode* npHead, bool visualize=false)
 {
     displayList(npHead);
@@ -203,7 +204,7 @@ struct ListNode* bubbleSort(struct ListNode* npHead, bool visualize=false)
     return npHead;
 }
 
-// Função que pede uma lista pra treeToList e a ordena pelo método de SelectionSort.
+// Função que ordena uma lista pelo método de SelectionSort.
 struct ListNode* selectionSort(struct ListNode* npHead, bool visualize=false)
 {
     struct ListNode* npCurrent = npHead;
@@ -237,7 +238,7 @@ struct ListNode* selectionSort(struct ListNode* npHead, bool visualize=false)
     return npHead;
 }
 
-// Função que pede uma lista pra treeToList e a ordena pelo método de InsertionSort.
+// Função que ordena uma lista pelo método de InsertionSort.
 struct ListNode* insertionSort(struct ListNode* npHead, bool visualize=false)
 {
     struct ListNode* npCurrent = npHead;
@@ -277,7 +278,7 @@ struct ListNode* insertionSort(struct ListNode* npHead, bool visualize=false)
     return npHead;
 }
 
-// Função que pede uma lista pra treeToList e a ordena pelo método de ShellSort.(Por enquanto, ela não faz a ordenação)
+// Função que ordena uma lista pelo método de ShellSort.
 struct ListNode* shellSort(struct ListNode* npHead, bool visualize=false)
 {
     int n=0;
@@ -288,6 +289,7 @@ struct ListNode* shellSort(struct ListNode* npHead, bool visualize=false)
         n++;
         npTemp = npTemp->npNext;
     }
+    // A distância a ser usada na comparação entre elementos é calculada com base no tamanho da lista.
     for (h = 1; h <= n; h = 3*h+1);
     h = (h-1)/3;
     npTemp = npHead;
@@ -352,7 +354,7 @@ struct ListNode* shellSort(struct ListNode* npHead, bool visualize=false)
     return npHead;
 }
 
-// Função que duplica uma lista.
+// Função que duplica uma lista. Ela é usada para que possamos comparar a lista original com a lista ordenada.
 struct ListNode* duplicateList(struct ListNode* npListNode)
 {
     struct ListNode* npHead = nullptr;
