@@ -5,10 +5,14 @@ O trabalho de Estrutura de Dados teve como objetivo a construção de um *Explor
 
 Integrantes: Lucas Cuan; Rodrigo Kalil; e Yonathan
 
-ATENÇÃO !!!
-Para rodar o código no VScode sem dar erro com as organizações das funções em .cpp e .hpp, abra a pasta que contém todos os arquivos e realize o seguinte procedimento: 
+## Pré-Requisitos
+Tenha a garantia de que a sua máquina possui os seguintes componentes
+- Compilador C++
+- Biblioteca Padrão do C++
 
-Terminal -> NewTerminal -> Colar no terminal: g++ main.cpp funcoesArvore.cpp funcoesLista.cpp funcoesMenu.cpp funcoesVisualizacao.cpp -o programa -> Colar no terminal: ./programa
+## Instruções
+Para rodar o código no VScode sem dar erro com as organizações das funções em .cpp e .hpp, abra a pasta que contém todos os arquivos e realize o seguinte procedimento: 
+Terminal -> NewTerminal -> Colar no terminal: 'g++ main.cpp funcoesArvore.cpp funcoesLista.cpp funcoesMenu.cpp funcoesVisualizacao.cpp -o programa' -> Colar no terminal: './programa'
 
 ## Funcionalidades
 Esse programa oferece um total de diversas funcionalidades e para ter acesso a essas, é preciso rodar o código do arquivo "main.cpp", no qual terá como saída o seguinte menu:
