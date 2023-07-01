@@ -175,8 +175,11 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 break;
             case 9:
                 timeStart = high_resolution_clock::now();
+                // A função treeToList cria uma lista duplamente encadeada a partir da árvore.
                 npHead = treeToList(npRoot);
+                // A função duplicateList cria uma cópia da lista duplamente encadeada.
                 npCopyRoot = duplicateList(npHead);
+                // A função bubbleSort ordena a lista duplamente encadeada.
                 npListRoot = bubbleSort(npHead, false);
                 timeStop=high_resolution_clock::now();
                 timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
@@ -187,7 +190,10 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 cin >> cOpcao;
                 if (cOpcao == 's' || cOpcao == 'S')
                 {
+                    // A função setPositions atribui a cada nó da lista um valor de posição, que é usado para representar graficamente a lista.
                     setPositions(npCopyRoot, npListRoot);
+                    // A função bubbleSort ordena a lista duplamente encadeada.
+                    // Desta vez, o parâmetro bVisualize é verdadeiro, o que faz com que a função visualizeList seja chamada a cada troca de nós.
                     bubbleSort(npCopyRoot, true);
                 }
                 break;
@@ -250,7 +256,7 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 cout << "Opcao invalida. Tente novamente." << endl;
         }
 
-        if (iOpcao <= 9 && iOpcao >= 12)
+        if (iOpcao <= 9 || iOpcao >= 12)
         {
             timeStop=high_resolution_clock::now();
             timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
