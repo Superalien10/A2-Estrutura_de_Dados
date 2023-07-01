@@ -24,10 +24,9 @@ string Readtxt(string strNomeArquivo)
         while (getline(ifsArquivo, strLinha)) {
             strConteudoArquivo += strLinha + " ";
         }
-
+        strConteudoArquivo.pop_back();
         //Se quiser ver o conteudo do arquivo, descomente a linha abaixo
         //cout << "Conteúdo do arquivo:\n" << strConteudoArquivo << endl;
-
         return strConteudoArquivo;
         ifsArquivo.close(); 
     } else {
@@ -36,6 +35,7 @@ string Readtxt(string strNomeArquivo)
     }
 
 }
+
 
 // Função para criar o menu inicial
 string CreateInicialMenu()
@@ -61,6 +61,7 @@ string CreateInicialMenu()
                 cout << "Opcao 1 selecionada." << endl;
                 cout << "Digite o nome do arquivo com a extensao: ";
                 cin >> strNomeArquivo;
+                timeStart = high_resolution_clock::now();
                 return Readtxt(strNomeArquivo);
                 break;
             case 2:
@@ -96,13 +97,18 @@ void CreateSecondaryMenu(struct Node* npRoot)
         cout << "======================" << endl;
         cout << "1. IMPRIMA O TAMANHO DA ARVORE" << endl;
         cout << "2. IMPRIMA A ALTURA/PROFUNDIDADE DA ARVORE" << endl;
+        cout << "3. INSERIR ELEMENTO NA ARVORE" << endl;
+        cout << "4. REMOVER ELEMENTO DA ARVORE" << endl;
+        cout << "5. BUSCAR ENDERECO DE MEMORIA DE UM ELEMENTO" << endl;
+        cout << "6. VERIFICAR SE A ARVORE E COMPLETA" << endl;
+        cout << "7. VERIFICAR SE A ARVORE E PERFEITA" << endl;
+        cout << "8. BFS" << endl;
         cout << "9. ORDENAR COM BUBBLE SORT" << endl;
         cout << "10. ORDENAR COM SELECTION SORT" << endl;
         cout << "11. ORDENAR COM INSERTION SORT" << endl;
         cout << "12. ORDENAR COM SHELL SORT" << endl;
         cout << "13. Sair" << endl;
         cout << "======================" << endl;
-        displayList(treeToList(npRoot));
         cout << "Digite o numero da opcao: ";
         cin >> iOpcao;
         cout << endl;
@@ -110,7 +116,7 @@ void CreateSecondaryMenu(struct Node* npRoot)
         struct ListNode* npListRoot = nullptr;
         struct ListNode* npHead;
         struct ListNode* npCopyRoot = nullptr;
-
+      
         switch (iOpcao) {
             case 1:
                 timeStart = high_resolution_clock::now();
@@ -119,6 +125,51 @@ void CreateSecondaryMenu(struct Node* npRoot)
             case 2:
                 timeStart = high_resolution_clock::now();
                 cout << "Altura/Profundidade da arvore: " << treeDepth(npRoot) << endl;
+                break;
+            case 3:
+                timeStart = high_resolution_clock::now();
+                cout << "Insira o elemento que deseja inserir na arvore: ";
+                int iElemento;  
+                cin >> iElemento;
+                npRoot = insertElement(npRoot, iElemento);
+                break;
+            case 4:
+                timeStart = high_resolution_clock::now();
+                cout << "Digite o elemento que deseja remover da arvore: ";
+                cin >> iElemento;
+                npRoot = removeElement(npRoot, iElemento);
+                break;
+            case 5:
+                timeStart = high_resolution_clock::now();
+                cout << "Insira o elemento que deseja buscar na arvore: ";
+                cin >> iElemento;
+                searchElement(npRoot, iElemento);
+                cout << endl;
+                break;
+            case 6:
+                timeStart = high_resolution_clock::now();
+                if (isComplete(npRoot, 0, treeLength(npRoot))) 
+                {
+                    cout << "A arvore e completa." << endl;
+                } else 
+                {
+                    cout << "A arvore nao e completa." << endl;
+                }
+                break;
+            case 7:
+                timeStart = high_resolution_clock::now();
+                if (isPerfect(npRoot)) 
+                {
+                    cout << "A arvore e perfeita." << endl;
+                } else 
+                {
+                    cout << "A arvore nao e perfeita." << endl;
+                }
+                break;
+            case 8:
+                timeStart = high_resolution_clock::now();
+                cout << "BFS: " << endl;
+                BFS(npRoot);
                 break;
             case 9:
                 timeStart = high_resolution_clock::now();
@@ -213,6 +264,7 @@ void CreateSecondaryMenu(struct Node* npRoot)
 void CreateCompleteMenu()
 {
     string strDadosIniciais = CreateInicialMenu();
+    if (strDadosIniciais == "") return; // Se o usuario digitou 3 no menu inicial
     struct Node* npRoot = buildTree(strDadosIniciais);
     timeStop=high_resolution_clock::now();
     timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
@@ -224,7 +276,7 @@ void CreateCompleteMenu()
 
 }
 
-// Função pra criar um novo nó
+//Função pra criar um novo nó
 struct Node* newNode(int iData)
 {
     //np -> node pointer
@@ -272,7 +324,7 @@ struct Node* buildTree(string strDadosIniciais)
         }
         i++;
     }
-    // npRoot = insertNode(npRoot, iData); //Um valor zero estava sendo inserido desnecessariamente.
+    npRoot = insertNode(npRoot, iData); 
     return npRoot;
 }
 
@@ -371,6 +423,216 @@ void displayList(struct ListNode* npListNode)
     }
 
     cout << endl;
+}
+
+// Função que insere elemento na árvore
+struct Node* insertElement(struct Node* npNode, int iData)
+{
+    if(npNode == nullptr)
+    {
+        return newNode(iData);
+    }
+    if(iData < npNode->iPayload)
+    {
+        npNode->npLeft = insertNode(npNode->npLeft, iData);
+    }
+    else
+    {
+        npNode->npRight = insertNode(npNode->npRight, iData);
+    }
+    return npNode;   
+}
+
+// Função que procura o menor valor da árvore
+struct Node* minValueNode(struct Node* npNode)
+{
+    struct Node* current = npNode;
+    while (current && current->npLeft != nullptr)
+        current = current->npLeft;
+    return current;
+}
+
+// Função que remove elemento da árvore
+struct Node* removeElement(struct Node* npNode, int iData)
+{
+    if (npNode == nullptr)
+    {
+        return npNode;
+    }
+    if (iData < npNode->iPayload)
+    {
+        npNode->npLeft = removeElement(npNode->npLeft, iData);
+    }
+    else if (iData > npNode->iPayload)
+    {
+        npNode->npRight = removeElement(npNode->npRight, iData);
+    }
+    else
+    {
+        if (npNode->npLeft == nullptr)
+        {
+            struct Node* temp = npNode->npRight;
+            free(npNode);
+            return temp;
+        }
+        else if (npNode->npRight == nullptr)
+        {
+            struct Node* temp = npNode->npLeft;
+            free(npNode);
+            return temp;
+        }
+        struct Node* temp = minValueNode(npNode->npRight);
+        npNode->iPayload = temp->iPayload;
+        npNode->npRight = removeElement(npNode->npRight, temp->iPayload);
+    }
+    return npNode;
+}
+
+// Função que imprime o endereço de memória de um nó com elemento pedido pelo usuário da árvore
+void searchElement(struct Node* npNode, int iData)
+{
+    if (npNode == nullptr)
+    {
+        cout << "Elemento nao encontrado" << endl;
+        return;
+    }
+    if (iData < npNode->iPayload)
+    {
+        searchElement(npNode->npLeft, iData);
+    }
+    else if (iData > npNode->iPayload)
+    {
+        searchElement(npNode->npRight, iData);
+    }
+    else
+    {
+        cout << "Endereco de memoria do elemento: " << npNode << endl;
+    }
+}
+
+//Estrutura de um node de uma fila
+struct sFilaNode {
+    Node* pTreeNode;
+    sFilaNode* pNext;
+};
+
+//Classe da fila
+class CFila {
+public:
+    sFilaNode* pFront, * pRear;
+
+    CFila() {
+        pFront = nullptr;
+        pRear = nullptr;
+    }
+
+    //Função para adicionar o elemento na fila
+    void AddFila(Node* pNode) {
+
+        //Criando um novo nó da fila
+        sFilaNode* pTemp = new sFilaNode;
+
+        //Definindo o novo nó como o pNode e seu próximo como ponteiro nulo
+        pTemp->pTreeNode = pNode;
+        pTemp->pNext = nullptr;
+
+        //Se a fila estiver vazia, o da frente e o último são o mesmo
+        if (pRear == nullptr) {
+            pFront = pRear = pTemp;
+            return;
+        }
+
+        pRear->pNext = pTemp;
+        pRear = pTemp;
+    }
+
+    //Função para remover o último elemento da fila
+    void RemoveFila() {
+        if (pFront == nullptr) {
+            cout << "A fila está vazia" << endl;
+            return;
+        }
+
+        //Armazenando o ponteiro do primeiro nó e atualizando
+        sFilaNode* pTemp = pFront;
+        pFront = pFront->pNext;
+
+        //Caso a fila fique vazia, colocar o último nó como nulo
+        if (pFront == nullptr) {
+            pRear = nullptr;
+        }
+
+        //Liberando a memória do nó
+        delete pTemp;
+    }
+
+    //Função para exibir a fila
+    void DisplayFila() {
+        sFilaNode* pTemp = pFront;
+        while (pTemp != nullptr) {
+            cout << pTemp->pTreeNode->iPayload << " ";
+            pTemp = pTemp->pNext;
+        }
+        cout << endl;
+    }
+};
+
+//Função para verificar se a árvore é completa
+bool IsComplete(Node* pNpNode, int iIndex, int iNumberNodes) {
+    if (pNpNode == nullptr)
+        return true;
+
+    //Se o índice atual for maior ou 
+    if (iIndex >= iNumberNodes)
+        return false;
+
+    //Verificando recursivamente
+    return (IsComplete(pNpNode->npLeft, 2 * iIndex + 1, iNumberNodes) &&
+            IsComplete(pNpNode->npRight, 2 * iIndex + 2, iNumberNodes));
+}
+
+//Função para verificar se a árvore é perfeita
+bool IsPerfect(Node* pNpNode) {
+    int iD = treeDepth(pNpNode);
+
+    //uma árvore vazia é considerada completa
+    if (pNpNode == nullptr)
+        return true;
+
+    int iNivel = 0;
+
+    //Verificando a profundidade e se o nó tem 2 filhos
+    if (pNpNode->npLeft == nullptr && pNpNode->npRight == nullptr)
+        return (iD == iNivel + 1);
+
+    //Verificando se o nó atual tem um filho ou nenhum
+    if (pNpNode->npLeft == nullptr || pNpNode->npRight == nullptr)3
+
+        //caso a condição prevaleça, a árvore não é perfeita
+        return false;
+    
+    return IsPerfect(pNpNode->npLeft) && IsPerfect(pNpNode->npRight);
+}
+
+//Função para realizar a travessia (Breadth-First Search)
+void BFS(Node* pNode) {
+    if (pNode == nullptr) return;
+
+    //Criando uma fila
+    CFila oFila;
+    oFila.AddFila(pNode);
+
+    //Loop para armazenar o nó na fila e printar
+    while (oFila.pFront != nullptr) {
+        Node* pTemp = oFila.pFront->pTreeNode;
+        cout << pTemp->iPayload << endl;
+
+        //Verificando se os nos existem e adicionando na fila
+        if (pTemp->npLeft != nullptr) oFila.AddFila(pTemp->npLeft);
+        if (pTemp->npRight != nullptr) oFila.AddFila(pTemp->npRight);
+
+        oFila.RemoveFila();
+    }
 }
 
 // Função que troca dois nós de lista
