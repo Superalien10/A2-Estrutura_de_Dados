@@ -185,6 +185,7 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
                 cout << "Lista ordenada: ";
                 displayList(npListRoot);
+                // Nós queremos mostrar o tempo de operação da ordenação antes do usuário visualizar o processo de ordenação. Ele é medido em nanossegundos.
                 cout << "A ordenacao levou " << timeDuration.count() << " nanosegundos." << endl;
                 cout << "Se quiser ver o processo de ordenacao a seguir, digite s/S. Caso contrario, digite n/N> ";
                 cin >> cOpcao;
@@ -197,7 +198,8 @@ void CreateSecondaryMenu(struct Node* npRoot)
                     bubbleSort(npCopyRoot, true);
                 }
                 break;
-            case 10:timeStart = high_resolution_clock::now();
+            case 10:
+                timeStart = high_resolution_clock::now();
                 npHead = treeToList(npRoot);
                 npCopyRoot = duplicateList(npHead);
                 npListRoot = selectionSort(npHead, false);
@@ -214,7 +216,8 @@ void CreateSecondaryMenu(struct Node* npRoot)
                     selectionSort(npCopyRoot, true);
                 }
                 break;
-            case 11:timeStart = high_resolution_clock::now();
+            case 11:
+                timeStart = high_resolution_clock::now();
                 npHead = treeToList(npRoot);
                 npCopyRoot = duplicateList(npHead);
                 npListRoot = insertionSort(npHead, false);
@@ -231,7 +234,8 @@ void CreateSecondaryMenu(struct Node* npRoot)
                     insertionSort(npCopyRoot, true);
                 }
                 break;
-            case 12:timeStart = high_resolution_clock::now();
+            case 12:
+                timeStart = high_resolution_clock::now();
                 npHead = treeToList(npRoot);
                 npCopyRoot = duplicateList(npHead);
                 npListRoot = shellSort(npHead, false);
@@ -256,11 +260,9 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 cout << "Opcao invalida. Tente novamente." << endl;
         }
 
-        if (iOpcao <= 9 || iOpcao >= 12)
-        {
-            timeStop=high_resolution_clock::now();
-            timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
-        }
+        timeStop=high_resolution_clock::now();
+        timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
+        // Nós queremos mostrar o tempo de operação total, incluindo possíveis interações com o usuário. O tempo é medido em nanossegundos.
         cout << "Tempo de operacao: " << timeDuration.count() << endl;
         cin.ignore();
         cout << "Pressione Enter para continuar...";

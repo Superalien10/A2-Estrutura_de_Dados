@@ -173,7 +173,6 @@ struct ListNode* swapListNodes(struct ListNode** npFirst, struct ListNode** npSe
 // Função que ordena uma lista pelo método de BubbleSort.
 struct ListNode* bubbleSort(struct ListNode* npHead, bool visualize=false)
 {
-    displayList(npHead);
     struct ListNode* npCurrent = npHead;
     bool bUnordered = true;
     while(bUnordered)
