@@ -174,7 +174,7 @@ bool isComplete(Node* pNpNode, int iIndex, int iNumberNodes) {
     if (pNpNode == nullptr)
         return true;
 
-    //Se o índice atual for maior ou 
+    //Se o índice atual for maior ou igual ao número de nós na árvore, então a árvore não é completa
     if (iIndex >= iNumberNodes)
         return false;
 
