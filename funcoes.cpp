@@ -130,9 +130,9 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 timeStop=high_resolution_clock::now();
                 timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
                 setPositions(npCopyRoot, npListRoot);
-                cout<<"Check 4"<<endl;
+                // cout<<"Check 4"<<endl;
                 bubbleSort(npCopyRoot, true);
-                cout<<"Check 5"<<endl;
+                // cout<<"Check 5"<<endl;
                 cout << "Lista ordenada: ";
                 displayList(npListRoot);
                 break;
@@ -153,6 +153,9 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 npListRoot = insertionSort(npHead, false);
                 timeStop=high_resolution_clock::now();
                 timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
+                cout << "A ordenação levou " << timeDuration.count() << " nanosegundos." << endl;
+                cout << "A seguir, veja o processo de ordenação." << endl;
+                sleep(1);
                 setPositions(npCopyRoot, npListRoot);
                 insertionSort(npCopyRoot, true);
                 cout << "Lista ordenada: ";
@@ -164,8 +167,8 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 npListRoot = shellSort(npHead, false);
                 timeStop=high_resolution_clock::now();
                 timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
-                setPositions(npCopyRoot, npListRoot);
-                shellSort(npCopyRoot, true);
+                // setPositions(npCopyRoot, npListRoot);
+                // shellSort(npCopyRoot, true);
                 cout << "Lista ordenada: ";
                 displayList(npListRoot);
                 break;
@@ -177,7 +180,7 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 cout << "Opcao invalida. Tente novamente." << endl;
         }
 
-        if (iOpcao >= 9 && iOpcao <= 12)
+        if (iOpcao <= 9 && iOpcao >= 12)
         {
             timeStop=high_resolution_clock::now();
             timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
@@ -671,23 +674,48 @@ void setPositions(struct ListNode* npListNode, struct ListNode* npOrdered)
 {
     struct ListNode* npTemp = npListNode;
     struct ListNode* npTemp2 = npOrdered;
-    int iPosition = 0;
-    while (npTemp!=nullptr)
+    displayList(npListNode);
+    displayList(npOrdered);
+    int iPosition = 1;
+    int iLast;
+    while (npTemp2!=nullptr)
     {
-        while (npTemp2!=nullptr)
+        while (npTemp!=nullptr)
         {
             if (npTemp->iPayload==npTemp2->iPayload)
             {
                 npTemp->iPosition = iPosition;
-                npTemp2 = npTemp2->npNext;
+                // cout << "Check 1: " << iPosition << endl;
+                // cout << "Check 2: " << npTemp->iPosition << endl;
+                // cout << "Check 3: " << npTemp2->iPayload << endl;
+                // cout << "Check 4: " << npTemp->iPayload << endl;
+                npTemp = npTemp->npNext;
             }
             else
             {
-                npTemp2 = npTemp2->npNext;
+                npTemp = npTemp->npNext;
             }
         }
-        npTemp2 = npOrdered;
-        npTemp = npTemp->npNext;
+        npTemp = npListNode;
+        iLast=npTemp2->iPayload;
+        bool bCondition = true;
+        while (bCondition)
+        {
+            // cout<<"Check 5: "<<npTemp2->iPayload<<endl;
+            if (npTemp2->npNext!=nullptr)
+            {
+                npTemp2 = npTemp2->npNext;
+                if (npTemp2->iPayload!=iLast)
+                {
+                    bCondition = false;
+                }
+            }
+            else
+            {
+                bCondition=false;
+                npTemp2=nullptr;
+            }
+        }
         iPosition++;
     }
     displayList(npListNode);
