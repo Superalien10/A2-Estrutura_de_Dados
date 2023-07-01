@@ -189,7 +189,8 @@ void CreateSecondaryMenu(struct Node* npRoot)
                     bubbleSort(npCopyRoot, true);
                 }
                 break;
-            case 10:timeStart = high_resolution_clock::now();
+            case 10:
+                timeStart = high_resolution_clock::now();
                 npHead = treeToList(npRoot);
                 npCopyRoot = duplicateList(npHead);
                 npListRoot = selectionSort(npHead, false);
@@ -206,7 +207,8 @@ void CreateSecondaryMenu(struct Node* npRoot)
                     selectionSort(npCopyRoot, true);
                 }
                 break;
-            case 11:timeStart = high_resolution_clock::now();
+            case 11:
+                timeStart = high_resolution_clock::now();
                 npHead = treeToList(npRoot);
                 npCopyRoot = duplicateList(npHead);
                 npListRoot = insertionSort(npHead, false);
@@ -223,7 +225,8 @@ void CreateSecondaryMenu(struct Node* npRoot)
                     insertionSort(npCopyRoot, true);
                 }
                 break;
-            case 12:timeStart = high_resolution_clock::now();
+            case 12:
+                timeStart = high_resolution_clock::now();
                 npHead = treeToList(npRoot);
                 npCopyRoot = duplicateList(npHead);
                 npListRoot = shellSort(npHead, false);
