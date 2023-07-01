@@ -10,7 +10,7 @@ Para rodar o código no VScode sem dar erro com as organizações das funções 
 
 Terminal -> NewTerminal -> Colar no terminal: g++ main.cpp funcoes.cpp -o programa -> Colar no terminal: ./programa
 
-##Funcionalidades
+## Funcionalidades
 Esse programa oferece um total de diversas funcionalidades e para ter acesso a essas, é preciso rodar o código do arquivo "main.cpp", no qual terá como saída o seguinte menu:
 
 ![Imagem do WhatsApp de 2023-07-01 à(s) 01 56 06](https://github.com/Superalien10/A2-Estrutura_de_Dados/assets/103382148/e465ac21-75f7-42db-8088-8f1c6517fae7)
@@ -23,7 +23,7 @@ Logo após a construção da árvore binária, aparece um menu secundário:
 
 Como a árvore já foi construída, o menu secundário apresenta todas as diversas funcionalidades para realizar modificações dentro da árvore já estabelecida. Segue a lista e a descrição sobre o que cada funcionalidade do menu secundário se responsabiliza:
 
-###Menu Secundário
+### Menu Secundário
 1. IMPRIMA O TAMANHO DA ÁRVORE - tem como objetivo imprimir o número de nós que a árvore possui
 2. IMPRIMA A ALTURA/PROFUNDIDADE DA ÁRVORE - imprime a altura daquela árvore, ou seja, número máximo de arestas em qualquer caminho da raiz até uma folha.
 3. INSERIR ELEMENTO NA ÁRVORE - adiciona um valor na árvore
