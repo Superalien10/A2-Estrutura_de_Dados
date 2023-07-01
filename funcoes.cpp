@@ -88,6 +88,7 @@ string CreateInicialMenu()
 void CreateSecondaryMenu(struct Node* npRoot)
 {
     int iOpcao;
+    char cOpcao;
 
     while (true) {
         cout << "======================" << endl;
@@ -122,19 +123,20 @@ void CreateSecondaryMenu(struct Node* npRoot)
             case 9:
                 timeStart = high_resolution_clock::now();
                 npHead = treeToList(npRoot);
-                cout<<"Check 1"<<endl;
                 npCopyRoot = duplicateList(npHead);
-                cout<<"Check 2"<<endl;
                 npListRoot = bubbleSort(npHead, false);
-                cout<<"Check 3"<<endl;
                 timeStop=high_resolution_clock::now();
                 timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
-                setPositions(npCopyRoot, npListRoot);
-                // cout<<"Check 4"<<endl;
-                bubbleSort(npCopyRoot, true);
-                // cout<<"Check 5"<<endl;
                 cout << "Lista ordenada: ";
                 displayList(npListRoot);
+                cout << "A ordenacao levou " << timeDuration.count() << " nanosegundos." << endl;
+                cout << "Se quiser ver o processo de ordenacao a seguir, digite s/S. Caso contrario, digite n/N> ";
+                cin >> cOpcao;
+                if (cOpcao == 's' || cOpcao == 'S')
+                {
+                    setPositions(npCopyRoot, npListRoot);
+                    bubbleSort(npCopyRoot, true);
+                }
                 break;
             case 10:timeStart = high_resolution_clock::now();
                 npHead = treeToList(npRoot);
@@ -142,10 +144,16 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 npListRoot = selectionSort(npHead, false);
                 timeStop=high_resolution_clock::now();
                 timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
-                setPositions(npCopyRoot, npListRoot);
-                selectionSort(npCopyRoot, true);
                 cout << "Lista ordenada: ";
                 displayList(npListRoot);
+                cout << "A ordenacao levou " << timeDuration.count() << " nanosegundos." << endl;
+                cout << "Se quiser ver o processo de ordenacao a seguir, digite s/S. Caso contrario, digite n/N> ";
+                cin >> cOpcao;
+                if (cOpcao == 's' || cOpcao == 'S')
+                {
+                    setPositions(npCopyRoot, npListRoot);
+                    selectionSort(npCopyRoot, true);
+                }
                 break;
             case 11:timeStart = high_resolution_clock::now();
                 npHead = treeToList(npRoot);
@@ -153,13 +161,16 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 npListRoot = insertionSort(npHead, false);
                 timeStop=high_resolution_clock::now();
                 timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
-                cout << "A ordenação levou " << timeDuration.count() << " nanosegundos." << endl;
-                cout << "A seguir, veja o processo de ordenação." << endl;
-                sleep(1);
-                setPositions(npCopyRoot, npListRoot);
-                insertionSort(npCopyRoot, true);
                 cout << "Lista ordenada: ";
                 displayList(npListRoot);
+                cout << "A ordenacao levou " << timeDuration.count() << " nanosegundos." << endl;
+                cout << "Se quiser ver o processo de ordenacao a seguir, digite s/S. Caso contrario, digite n/N> ";
+                cin >> cOpcao;
+                if (cOpcao == 's' || cOpcao == 'S')
+                {
+                    setPositions(npCopyRoot, npListRoot);
+                    insertionSort(npCopyRoot, true);
+                }
                 break;
             case 12:timeStart = high_resolution_clock::now();
                 npHead = treeToList(npRoot);
@@ -167,10 +178,16 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 npListRoot = shellSort(npHead, false);
                 timeStop=high_resolution_clock::now();
                 timeDuration = duration_cast<nanoseconds>(timeStop - timeStart);
-                // setPositions(npCopyRoot, npListRoot);
-                // shellSort(npCopyRoot, true);
                 cout << "Lista ordenada: ";
                 displayList(npListRoot);
+                cout << "A ordenacao levou " << timeDuration.count() << " nanosegundos." << endl;
+                cout << "Se quiser ver o processo de ordenacao a seguir, digite s/S. Caso contrario, digite n/N> ";
+                cin >> cOpcao;
+                if (cOpcao == 's' || cOpcao == 'S')
+                {
+                    setPositions(npCopyRoot, npListRoot);
+                    shellSort(npCopyRoot, true);
+                }
                 break;
             case 13:
                 timeStart = high_resolution_clock::now();
@@ -674,8 +691,8 @@ void setPositions(struct ListNode* npListNode, struct ListNode* npOrdered)
 {
     struct ListNode* npTemp = npListNode;
     struct ListNode* npTemp2 = npOrdered;
-    displayList(npListNode);
-    displayList(npOrdered);
+    // displayList(npListNode);
+    // displayList(npOrdered);
     int iPosition = 1;
     int iLast;
     while (npTemp2!=nullptr)
