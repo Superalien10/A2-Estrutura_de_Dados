@@ -12,7 +12,9 @@ Tenha a garantia de que a sua máquina possui os seguintes componentes
 
 ## Instruções
 Para rodar o código no VScode sem dar erro com as organizações das funções em .cpp e .hpp, abra a pasta que contém todos os arquivos e realize o seguinte procedimento: 
-Terminal -> NewTerminal -> Colar no terminal: 'g++ main.cpp funcoesArvore.cpp funcoesLista.cpp funcoesMenu.cpp funcoesVisualizacao.cpp -o programa' -> Colar no terminal: './programa'
+Terminal -> NewTerminal -> Colar no terminal: 'g++ main.cpp funcoesArvore.cpp funcoesLista.cpp funcoesMenu.cpp funcoesVisualizacao.cpp ClassFila.cpp -o programa' -> Colar no terminal: './programa'
+Há um arquivo de testes que averigua a funcionalidade de algumas funções. Para executá-lo, siga o seguinte procedimento:
+Terminal -> NewTerminal -> Colar no terminal: 'g++ testes.cpp funcoesArvore.cpp funcoesLista.cpp funcoesMenu.cpp funcoesVisualizacao.cpp ClassFila.cpp -o testes' -> Colar no terminal: './testes'
 
 ## Funcionalidades
 Esse programa oferece um total de diversas funcionalidades e para ter acesso a essas, é preciso rodar o código do arquivo "main.cpp", no qual terá como saída o seguinte menu:
