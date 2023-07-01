@@ -28,8 +28,8 @@ struct ListNode
     struct ListNode* npNext;
     struct ListNode* npPrev;
 };
-bool isComplete(struct Node* npNode, int iIndex, int iNumberNodes);
-bool isPerfect(struct Node* npNode);
+bool IsComplete(struct Node* npNode, int iIndex, int iNumberNodes);
+bool IsPerfect(struct Node* npNode);
 void BFS(Node* pNode);
 struct ListNode* newListNode(int iData);
 struct ListNode* insertListNode(struct ListNode* npNode, int iData);

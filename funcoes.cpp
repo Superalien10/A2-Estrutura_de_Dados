@@ -142,7 +142,7 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 break;
             case 6:
                 timeStart = high_resolution_clock::now();
-                if (isComplete(npRoot, 0, treeLength(npRoot))) 
+                if (IsComplete(npRoot, 0, treeLength(npRoot))) 
                 {
                     cout << "A arvore e completa." << endl;
                 } else 
@@ -152,7 +152,7 @@ void CreateSecondaryMenu(struct Node* npRoot)
                 break;
             case 7:
                 timeStart = high_resolution_clock::now();
-                if (isPerfect(npRoot)) 
+                if (IsPerfect(npRoot)) 
                 {
                     cout << "A arvore e perfeita." << endl;
                 } else 
@@ -549,7 +549,7 @@ bool IsPerfect(Node* pNpNode) {
         return (iD == iNivel + 1);
 
     //Verificando se o nó atual tem um filho ou nenhum
-    if (pNpNode->npLeft == nullptr || pNpNode->npRight == nullptr)3
+    if (pNpNode->npLeft == nullptr || pNpNode->npRight == nullptr)
 
         //caso a condição prevaleça, a árvore não é perfeita
         return false;
